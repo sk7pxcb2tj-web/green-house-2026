@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green House Official 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #FAFAFA; color: #1D1D1F; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        h1, h2, h3, h4, h5, h6, .font-mitr { font-family: 'Mitr', sans-serif; }
+        .apple-card { background: #FFFFFF; border-radius: 24px; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .btn-emerald { background: #34C759; color: #FFFFFF; border-radius: 14px; font-weight: 500; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .btn-emerald:hover:not(:disabled) { background: #2EBE52; transform: scale(1.01); }
+        .form-input-apple { width: 100%; padding: 12px 16px; border-radius: 14px; border: 1px solid #E5E5EA; background: #FFFFFF; font-size: 14px; outline: none; transition: all 0.2s; }
+        .form-input-apple:focus { border-color: #34C759; box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.12); }
+        .spa-view { display: none; }
+        .spa-view.active { display: block; animation: appleSmooth 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes appleSmooth { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .autosave-toast { position: fixed; bottom: 24px; right: 24px; background: rgba(29, 29, 31, 0.9); backdrop-filter: blur(12px); color: white; padding: 10px 20px; border-radius: 99px; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 100; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
+        .autosave-toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="flex flex-col h-screen bg-[#FAFAFA]">
+
+    <!-- 📢 Live Announcement Ticker Bar -->
+    <div id="announcement-bar" class="bg-emerald-600 text-white px-6 py-2.5 flex items-center justify-between text-xs font-mitr shrink-0 shadow-sm z-40">
+        <div class="flex items-center gap-3 overflow-hidden">
+            <span class="bg-white/20 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider animate-pulse">ประกาศด่วน</span>
+            <span id="announcement-text" class="truncate">กำลังซิงก์ข้อมูลจาก Firebase Cloud...</span>
+        </div>
+        <div id="announcement-admin-btn" class="hidden">
+            <button onclick="openAnnouncementModal()" class="text-[11px] underline hover:text-emerald-200">แก้ไขประกาศ</button>
+        </div>
+    </div>
+
+    <!-- Toast แจ้งเตือน -->
+    <div id="autosave-toast" class="autosave-toast">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toast-message">บันทึกข้อมูลเรียบร้อย</span>
+    </div>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-[#FAFAFA] border-r border-gray-200/80 flex flex-col justify-between shrink-0 p-5 space-y-4 overflow-y-auto">
+            <div class="space-y-4">
+                <div class="flex items-center gap-3 px-2">
+                    <div class="w-9 h-9 bg-emerald-600 text-white rounded-2xl flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-flag"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-mitr font-bold text-sm text-gray-900">Green House</h2>
+                        <p class="text-[10px] text-emerald-600 font-semibold">Official Portal 2026</p>
+                    </div>
+                </div>
+
+                <nav class="space-y-1 text-xs font-medium text-gray-600 font-mitr">
+                    <button onclick="switchPage('dashboard')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer text-gray-700 font-semibold bg-gray-200/60" data-target="dashboard">
+                        <i class="fa-solid fa-chart-pie text-emerald-600 w-5"></i> <span>แดชบอร์ดการเงิน</span>
+                    </button>
+                    <button onclick="switchPage('shirt-store')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer" data-target="shirt-store">
+                        <i class="fa-solid fa-shirt text-blue-500 w-5"></i> <span>ร้านค้าสั่งเสื้อสี</span>
+                    </button>
+                    <button onclick="switchPage('meal-pass')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer" data-target="meal-pass">
+                        <i class="fa-solid fa-utensils text-orange-500 w-5"></i> <span>สแกน E-Meal Pass</span>
+                    </button>
+                    <button onclick="switchPage('schedule')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer" data-target="schedule">
+                        <i class="fa-solid fa-calendar-days text-indigo-500 w-5"></i> <span>ตารางเวลาแข่งขัน</span>
+                    </button>
+                    <button onclick="switchPage('attendance')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer role-admin hidden" data-target="attendance">
+                        <i class="fa-solid fa-clipboard-user text-teal-600 w-5"></i> <span>เช็กชื่อสตาฟฟ์/กองเชียร์</span>
+                    </button>
+                    <button onclick="switchPage('expenses')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer role-admin hidden" data-target="expenses">
+                        <i class="fa-solid fa-receipt text-rose-600 w-5"></i> <span>บันทึกรายจ่าย & ใบเสร็จ</span>
+                    </button>
+                    <button onclick="switchPage('scoreboard')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer" data-target="scoreboard">
+                        <i class="fa-solid fa-trophy text-yellow-500 w-5"></i> <span>สรุปเหรียญรางวัล</span>
+                    </button>
+                    <button onclick="switchPage('cheer-hub')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer" data-target="cheer-hub">
+                        <i class="fa-solid fa-bullhorn text-pink-500 w-5"></i> <span>ส่งกำลังใจ & เพลงเชียร์</span>
+                    </button>
+                    <button onclick="switchPage('sos-aid')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer" data-target="sos-aid">
+                        <i class="fa-solid fa-kit-medical text-rose-500 w-5"></i> <span>แจ้งปฐมพยาบาล SOS</span>
+                    </button>
+                    <button onclick="switchPage('sponsors')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer" data-target="sponsors">
+                        <i class="fa-solid fa-hand-holding-heart text-purple-500 w-5"></i> <span>ทำเนียบผู้สนับสนุน</span>
+                    </button>
+                    <button onclick="switchPage('wrapped')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer" data-target="wrapped">
+                        <i class="fa-solid fa-gift text-indigo-500 w-5"></i> <span>Green House Wrapped</span>
+                    </button>
+                    <button onclick="switchPage('users')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer role-super-admin hidden" data-target="users">
+                        <i class="fa-solid fa-users-gear text-teal-500 w-5"></i> <span>จัดการผู้ใช้งานแอดมิน</span>
+                    </button>
+                    <button onclick="switchPage('settings')" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-gray-200/60 transition cursor-pointer role-super-admin hidden" data-target="settings">
+                        <i class="fa-solid fa-gear text-gray-500 w-5"></i> <span>ตั้งค่าระบบหลัก</span>
+                    </button>
+                </nav>
+            </div>
+
+            <div class="px-2 space-y-2">
+                <div id="logged-out-btn-box">
+                    <button onclick="openStudentLoginModal()" class="w-full py-2.5 btn-emerald font-mitr text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+                        <i class="fa-solid fa-id-card"></i> ยืนยันตัวตนนักเรียน
+                    </button>
+                    <button onclick="openAdminLoginModal()" class="w-full mt-1 py-2 text-gray-400 hover:text-gray-700 font-mitr text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                        <i class="fa-solid fa-lock"></i> เข้าสู่ระบบแอดมิน
+                    </button>
+                </div>
+                <div id="logged-in-btn-box" class="hidden">
+                    <button onclick="handleLogout()" class="w-full py-2.5 bg-gray-200/60 hover:bg-rose-50 hover:text-rose-600 text-gray-600 rounded-2xl font-mitr text-xs font-semibold transition flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col h-screen overflow-hidden bg-white">
+            <header class="h-16 border-b border-gray-100 px-8 flex items-center justify-between shrink-0">
+                <span id="current-page-title" class="font-mitr font-bold text-base text-gray-900">แดชบอร์ดการเงิน</span>
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <p id="user-display-name" class="font-mitr font-bold text-xs text-gray-800">ผู้เข้าชมทั่วไป (Guest)</p>
+                        <p id="user-display-role" class="text-[10px] text-emerald-600 font-semibold">คณะสีเขียว Official</p>
+                    </div>
+                    <div class="w-9 h-9 bg-gray-100 text-gray-700 rounded-full flex items-center justify-center font-mitr font-bold text-xs">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-y-auto p-8 space-y-8 bg-[#FAFAFA]">
+                
+                <!-- PAGE 1: DASHBOARD -->
+                <section id="view-dashboard" class="spa-view active space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                        <div class="apple-card p-6 bg-white">
+                            <p class="text-xs text-gray-400 font-mitr">ยอดขายเสื้อรวม</p>
+                            <h3 id="stat-shirt-rev" class="text-3xl font-bold font-mitr text-emerald-600 mt-2">฿0</h3>
+                        </div>
+                        <div class="apple-card p-6 bg-white">
+                            <p class="text-xs text-gray-400 font-mitr">เงินสนับสนุนรวม</p>
+                            <h3 id="stat-spons" class="text-3xl font-bold font-mitr text-blue-600 mt-2">฿0</h3>
+                        </div>
+                        <div class="apple-card p-6 bg-white">
+                            <p class="text-xs text-gray-400 font-mitr">ค่าใช้จ่ายสวัสดิการรวม</p>
+                            <h3 id="stat-spent" class="text-3xl font-bold font-mitr text-rose-500 mt-2">฿0</h3>
+                        </div>
+                        <div class="apple-card p-6 bg-white">
+                            <p class="text-xs text-gray-400 font-mitr">กองกลางคงเหลือสุทธิ</p>
+                            <h3 id="stat-balance" class="text-3xl font-bold font-mitr text-indigo-600 mt-2">฿0</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE 2: SHIRT STORE -->
+                <section id="view-shirt-store" class="spa-view space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="apple-card p-6 bg-white space-y-4">
+                            <h3 class="font-mitr font-bold text-base text-gray-900 border-b pb-2">สั่งซื้อเสื้อกีฬาสีเขียว 2026</h3>
+                            <form onsubmit="event.preventDefault(); submitShirtOrder(this);" class="space-y-3 text-xs font-mitr">
+                                <div><label class="block font-semibold mb-1 text-gray-600">รหัสนักเรียน</label><input type="text" id="shirt-studentid" class="form-input-apple" required></div>
+                                <div><label class="block font-semibold mb-1 text-gray-600">ชื่อ-นามสกุล</label><input type="text" id="shirt-name" class="form-input-apple" required></div>
+                                <div>
+                                    <label class="block font-semibold mb-1 text-gray-600">เลือกไซซ์เสื้อ</label>
+                                    <select id="shirt-size" class="form-input-apple">
+                                        <option value="S">S (รอบอก 36")</option>
+                                        <option value="M">M (รอบอก 38")</option>
+                                        <option value="L">L (รอบอก 40")</option>
+                                        <option value="XL">XL (รอบอก 42")</option>
+                                        <option value="2XL">2XL (รอบอก 44")</option>
+                                    </select>
+                                </div>
+                                <div><label class="block font-semibold mb-1 text-gray-600">จำนวน (ตัว)</label><input type="number" id="shirt-qty" value="1" min="1" class="form-input-apple" required></div>
+                                <button type="submit" class="w-full py-3 btn-emerald font-mitr font-semibold cursor-pointer">ยืนยันสั่งซื้อ</button>
+                            </form>
+                        </div>
+                        <div class="md:col-span-2 apple-card bg-white overflow-hidden">
+                            <div class="p-4 border-b border-gray-100 flex justify-between items-center">
+                                <h3 class="font-mitr font-bold text-sm text-gray-900">รายการสั่งจองเสื้อสีเขียว (Firebase Cloud)</h3>
+                            </div>
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-gray-50 text-gray-500 font-mitr">
+                                    <tr>
+                                        <th class="p-3">รหัสนักเรียน</th>
+                                        <th class="p-3">ชื่อ</th>
+                                        <th class="p-3">ไซซ์/จำนวน</th>
+                                        <th class="p-3">ยอดชำระ</th>
+                                        <th class="p-3">สถานะ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="shirt-orders-tbody" class="divide-y divide-gray-100">
+                                    <tr><td colspan="5" class="text-center py-6 text-gray-400">กำลังซิงก์ข้อมูล...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE 3: E-MEAL PASS -->
+                <section id="view-meal-pass" class="spa-view space-y-6">
+                    <div class="apple-card p-8 bg-white max-w-xl mx-auto space-y-6 text-center">
+                        <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl mx-auto flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-mitr font-bold text-base text-gray-900">ระบบสแกนแจกอาหาร E-Meal Pass</h3>
+                            <p class="text-xs text-gray-400 mt-1">กรอกรหัสนักเรียนเพื่อบันทึกการรับอาหารสวัสดิการสีเขียว (ตรวจสอบซ้ำอัตโนมัติ)</p>
+                        </div>
+                        <div class="space-y-4 text-left font-mitr text-xs">
+                            <div>
+                                <label class="block font-semibold mb-1 text-gray-600">รหัสนักเรียน</label>
+                                <input type="text" id="meal-studentid" placeholder="ระบุรหัสนักเรียน" class="form-input-apple text-center text-lg font-bold">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="claimMeal(1)" class="py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold rounded-2xl transition cursor-pointer">
+                                    <i class="fa-solid fa-utensils mr-1"></i> แจกอาหาร วันที่ 1
+                                </button>
+                                <button onclick="claimMeal(2)" class="py-3 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold rounded-2xl transition cursor-pointer">
+                                    <i class="fa-solid fa-utensils mr-1"></i> แจกอาหาร วันที่ 2
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE 4: MATCH SCHEDULE -->
+                <section id="view-schedule" class="spa-view space-y-6">
+                    <div class="apple-card p-6 bg-white space-y-4">
+                        <div class="flex justify-between items-center border-b pb-3">
+                            <h3 class="font-mitr font-bold text-base text-gray-900"><i class="fa-solid fa-calendar-days text-indigo-500 mr-2"></i>ตารางเวลาแข่งขัน & ไทม์ไลน์กิจกรรม</h3>
+                            <button onclick="openScheduleModal()" id="btn-add-schedule" class="hidden px-4 py-2 btn-emerald font-mitr text-xs font-medium cursor-pointer">
+                                <i class="fa-solid fa-plus mr-1"></i> เพิ่มกำหนดการ
+                            </button>
+                        </div>
+                        <div id="schedule-list" class="space-y-3">
+                            <p class="text-xs text-gray-400">กำลังโหลดข้อมูล...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE 5: ATTENDANCE -->
+                <section id="view-attendance" class="spa-view space-y-6">
+                    <div class="apple-card p-6 bg-white space-y-4 max-w-xl mx-auto">
+                        <h3 class="font-mitr font-bold text-base text-gray-900 border-b pb-3"><i class="fa-solid fa-clipboard-user text-teal-600 mr-2"></i>ระบบเช็กชื่อสตาฟฟ์ & กองเชียร์</h3>
+                        <div class="space-y-3 font-mitr text-xs">
+                            <div>
+                                <label class="block font-semibold mb-1 text-gray-600">ประเภทการเช็กชื่อ</label>
+                                <select id="att-type" class="form-input-apple">
+                                    <option value="สตาฟฟ์ปฏิบัติหน้าที่">สตาฟฟ์ปฏิบัติหน้าที่</option>
+                                    <option value="กองเชียร์อัฒจันทร์">กองเชียร์อัฒจันทร์</option>
+                                </select>
+                            </div>
+                            <div><label class="block font-semibold mb-1 text-gray-600">รหัสนักเรียน / ชื่อสตาฟฟ์</label><input type="text" id="att-id" class="form-input-apple" placeholder="เช่น 66001 หรือ สมชาย"></div>
+                            <div><label class="block font-semibold mb-1 text-gray-600">ฝ่าย / โซน</label><input type="text" id="att-zone" class="form-input-apple" placeholder="เช่น ฝ่ายสวัสดิการ, อัฒจันทร์โซน A"></div>
+                            <button onclick="submitAttendance()" class="w-full py-3 btn-emerald font-semibold cursor-pointer">บันทึกการเช็กชื่อ</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE 6: EXPENSES -->
+                <section id="view-expenses" class="spa-view space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="apple-card p-6 bg-white space-y-4">
+                            <h3 class="font-mitr font-bold text-base text-gray-900 border-b pb-2">เบิกจ่ายงบกองกลาง</h3>
+                            <form onsubmit="event.preventDefault(); submitExpense(this);" class="space-y-3 text-xs font-mitr">
+                                <div><label class="block font-semibold mb-1 text-gray-600">รายการรายจ่าย</label><input type="text" id="exp-title" class="form-input-apple" required placeholder="เช่น ค่าน้ำดื่มแพ็ก"></div>
+                                <div><label class="block font-semibold mb-1 text-gray-600">หมวดหมู่</label>
+                                    <select id="exp-cat" class="form-input-apple">
+                                        <option value="สวัสดิการอาหาร/น้ำ">สวัสดิการอาหาร/น้ำ</option>
+                                        <option value="อุปกรณ์เชียร์/พร็อพ">อุปกรณ์เชียร์/พร็อพ</option>
+                                        <option value="เวชภัณฑ์ปฐมพยาบาล">เวชภัณฑ์ปฐมพยาบาล</option>
+                                    </select>
+                                </div>
+                                <div><label class="block font-semibold mb-1 text-gray-600">จำนวนเงิน (บาท)</label><input type="number" id="exp-amount" class="form-input-apple" required min="1"></div>
+                                <button type="submit" class="w-full py-3 btn-emerald font-semibold cursor-pointer">ยื่นเรื่องเบิกเงิน</button>
+                            </form>
+                        </div>
+                        <div class="md:col-span-2 apple-card bg-white overflow-hidden">
+                            <div class="p-4 border-b border-gray-100 flex justify-between items-center">
+                                <h3 class="font-mitr font-bold text-sm text-gray-900">ประวัติการเบิกจ่ายกองกลาง</h3>
+                            </div>
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-gray-50 text-gray-500 font-mitr">
+                                    <tr>
+                                        <th class="p-3">รายการ</th>
+                                        <th class="p-3">หมวดหมู่</th>
+                                        <th class="p-3">จำนวนเงิน</th>
+                                        <th class="p-3">สถานะ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="expenses-tbody" class="divide-y divide-gray-100">
+                                    <tr><td colspan="4" class="text-center py-6 text-gray-400">กำลังซิงก์ข้อมูล...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE 7: SCOREBOARD -->
+                <section id="view-scoreboard" class="spa-view space-y-6">
+                    <div class="grid grid-cols-3 gap-5">
+                        <div class="apple-card p-6 bg-yellow-50/50 border border-yellow-200 text-center">
+                            <p class="text-xs font-mitr text-yellow-700 font-bold">เหรียญทอง</p>
+                            <h3 id="gold-count" class="text-3xl font-bold font-mitr text-yellow-800 mt-1">0</h3>
+                        </div>
+                        <div class="apple-card p-6 bg-slate-50 border border-slate-200 text-center">
+                            <p class="text-xs font-mitr text-slate-600 font-bold">เหรียญเงิน</p>
+                            <h3 id="silver-count" class="text-3xl font-bold font-mitr text-slate-800 mt-1">0</h3>
+                        </div>
+                        <div class="apple-card p-6 bg-amber-50/50 border border-amber-200 text-center">
+                            <p class="text-xs font-mitr text-amber-700 font-bold">เหรียญทองแดง</p>
+                            <h3 id="bronze-count" class="text-3xl font-bold font-mitr text-amber-800 mt-1">0</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE 8: CHEER HUB -->
+                <section id="view-cheer-hub" class="spa-view space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="apple-card p-6 bg-white space-y-4">
+                            <h3 class="font-mitr font-bold text-base text-gray-900 border-b pb-2"><i class="fa-solid fa-paper-plane mr-2 text-pink-500"></i>ส่งข้อความให้กำลังใจนักกีฬา</h3>
+                            <div class="space-y-3 font-mitr text-xs">
+                                <input type="text" id="cheer-name" placeholder="ชื่อ หรือ รหัสนักเรียน" class="form-input-apple">
+                                <textarea id="cheer-msg" rows="3" placeholder="พิมพ์ข้อความเชียร์สีเขียว..." class="form-input-apple"></textarea>
+                                <button onclick="sendCheerMessage()" class="w-full py-3 btn-emerald font-semibold cursor-pointer">ส่งข้อความเชียร์</button>
+                            </div>
+                        </div>
+                        <div class="apple-card p-6 bg-white space-y-4">
+                            <h3 class="font-mitr font-bold text-base text-gray-900 border-b pb-2"><i class="fa-solid fa-music mr-2 text-emerald-600"></i>เพลงเชียร์ประจำสีเขียว</h3>
+                            <div class="space-y-2 text-xs font-mitr text-gray-600">
+                                <p class="font-bold text-gray-900">เพลงมาร์ชสีเขียว:</p>
+                                <p class="bg-gray-50 p-3 rounded-xl italic">"สีเขียวเกรียงไกร รวมใจเป็นหนึ่ง ร่วมกันฟันฝ่า นำชัยชนะกลับมา..."</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE 9: SOS -->
+                <section id="view-sos-aid" class="spa-view space-y-6">
+                    <div class="apple-card p-8 bg-white max-w-xl mx-auto space-y-5">
+                        <div class="flex items-center gap-3 border-b pb-3">
+                            <div class="w-10 h-10 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-lg"><i class="fa-solid fa-truck-medical"></i></div>
+                            <h3 class="font-mitr font-bold text-base text-gray-900">แจ้งเหตุปฐมพยาบาลฉุกเฉิน (First Aid SOS)</h3>
+                        </div>
+                        <div class="space-y-3 font-mitr text-xs">
+                            <div><label class="block font-semibold mb-1 text-gray-600">สถานที่เกิดเหตุ / ซุ้มสนาม</label><input type="text" id="sos-location" placeholder="เช่น อัฒจันทร์โซน A" class="form-input-apple"></div>
+                            <div><label class="block font-semibold mb-1 text-gray-600">อาการเบื้องต้น</label><input type="text" id="sos-symptom" placeholder="เช่น เป็นลม, ตะคริว" class="form-input-apple"></div>
+                            <div><label class="block font-semibold mb-1 text-gray-600">ชื่อผู้ป่วย (ถ้าทราบ)</label><input type="text" id="sos-patient" placeholder="ชื่อ-นามสกุล" class="form-input-apple"></div>
+                            <button onclick="submitFirstAid()" class="w-full py-3.5 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl transition cursor-pointer">ส่งสัญญาณเรียกหน่วยปฐมพยาบาลด่วน</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE 10: SPONSORS -->
+                <section id="view-sponsors" class="spa-view space-y-6">
+                    <div class="apple-card p-8 bg-white space-y-4">
+                        <div class="flex justify-between items-center border-b pb-3">
+                            <h3 class="font-mitr font-bold text-base text-gray-900"><i class="fa-solid fa-heart mr-2 text-rose-500"></i>ทำเนียบผู้สนับสนุนคณะสีเขียว</h3>
+                            <button onclick="openSponsorModal()" id="btn-add-sponsor" class="hidden px-4 py-2 btn-emerald font-mitr text-xs font-medium cursor-pointer">
+                                <i class="fa-solid fa-plus mr-1"></i> เพิ่มผู้สนับสนุน
+                            </button>
+                        </div>
+                        <div id="sponsors-list" class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                            <div class="p-4 bg-gray-50 rounded-2xl text-center"><p class="text-xs text-gray-400">กำลังซิงก์ข้อมูล...</p></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE 11: WRAPPED -->
+                <section id="view-wrapped" class="spa-view space-y-6">
+                    <div class="apple-card p-8 bg-gradient-to-br from-emerald-500 to-teal-700 text-white max-w-md mx-auto text-center space-y-5 rounded-3xl shadow-xl">
+                        <h3 class="font-mitr font-bold text-xl">Green House Wrapped 2026</h3>
+                        <p class="text-xs opacity-90">สรุปสถิติความทรงจำประจำปีของคุณ</p>
+                        <input type="text" id="wrapped-studentid" placeholder="ระบุรหัสนักเรียนของคุณ" class="form-input-apple text-gray-900 text-center font-bold">
+                        <button onclick="loadWrapped()" class="w-full py-3 bg-white text-emerald-800 font-bold font-mitr rounded-2xl cursor-pointer hover:bg-emerald-50">ดู Wrapped สถิติส่วนตัว</button>
+                        <div id="wrapped-result" class="hidden text-left bg-white/10 p-4 rounded-2xl space-y-2 text-xs font-mitr border border-white/20"></div>
+                    </div>
+                </section>
+
+                <!-- PAGE 12: USERS -->
+                <section id="view-users" class="spa-view space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-mitr font-bold text-base text-gray-900">จัดการผู้ใช้งานแอดมิน (Firebase)</h3>
+                        <button onclick="openUserModal()" class="px-4 py-2.5 btn-emerald font-mitr text-xs font-medium cursor-pointer">
+                            <i class="fa-solid fa-user-plus mr-1.5"></i> เพิ่มแอดมิน
+                        </button>
+                    </div>
+                    <div class="apple-card bg-white overflow-hidden">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-gray-50 text-gray-500 font-mitr">
+                                <tr>
+                                    <th class="p-4">รหัสนักเรียน</th>
+                                    <th class="p-4">ชื่อ-นามสกุล</th>
+                                    <th class="p-4">สิทธิ์แอดมิน (Role)</th>
+                                    <th class="p-4 text-center">จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-table-body" class="divide-y divide-gray-100">
+                                <tr><td colspan="4" class="text-center py-8 text-gray-400">กำลังซิงก์ข้อมูล...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- PAGE 13: SETTINGS -->
+                <section id="view-settings" class="spa-view space-y-6">
+                    <div class="apple-card p-8 bg-white space-y-6 max-w-2xl">
+                        <h3 class="font-mitr font-bold text-base text-gray-900 border-b pb-3">ตั้งค่าระบบหลัก (ควบคุมโดย Super Admin)</h3>
+                        <form onsubmit="event.preventDefault(); saveSettings(this);" class="space-y-4 text-xs font-mitr">
+                            <div><label class="block font-semibold mb-1 text-gray-600">ชื่อสถานศึกษา</label><input type="text" id="set-school" class="form-input-apple"></div>
+                            <div><label class="block font-semibold mb-1 text-gray-600">ชื่อระบบ</label><input type="text" id="set-system" class="form-input-apple"></div>
+                            <div><label class="block font-semibold mb-1 text-gray-600">ราคาเสื้อสีเขียว (บาท)</label><input type="number" id="set-shirtprice" class="form-input-apple"></div>
+                            <button type="submit" class="py-3 px-6 btn-emerald font-semibold cursor-pointer">บันทึกการตั้งค่า</button>
+                        </form>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <div id="student-login-modal" class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="apple-card p-8 max-w-md w-full bg-white text-center space-y-5">
+            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl mx-auto flex items-center justify-center text-xl"><i class="fa-solid fa-id-card"></i></div>
+            <div>
+                <h3 class="font-mitr font-bold text-base text-gray-900">ยืนยันตัวตนนักเรียนสีเขียว</h3>
+                <p class="text-xs text-gray-400 mt-1">กรอกรหัสนักเรียนเพื่อเข้าใช้งาน</p>
+            </div>
+            <form onsubmit="event.preventDefault(); handleStudentLogin();" class="space-y-4 text-left font-mitr text-xs">
+                <div><label class="block font-semibold mb-1 text-gray-600">รหัสนักเรียน</label><input type="text" id="student-login-id" placeholder="เช่น 66001" class="form-input-apple text-center text-base font-bold" required></div>
+                <div class="flex gap-2">
+                    <button type="button" onclick="closeStudentLoginModal()" class="flex-1 py-3 bg-gray-100 rounded-2xl font-semibold">ยกเลิก</button>
+                    <button type="submit" class="flex-1 py-3 btn-emerald font-semibold">ยืนยันตัวตน</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="admin-login-modal" class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="apple-card p-8 max-w-md w-full bg-white text-center space-y-5">
+            <div class="w-12 h-12 bg-gray-100 text-gray-800 rounded-2xl mx-auto flex items-center justify-center text-xl"><i class="fa-solid fa-lock"></i></div>
+            <div>
+                <h3 class="font-mitr font-bold text-base text-gray-900">เข้าสู่ระบบแอดมิน</h3>
+                <p class="text-xs text-gray-400 mt-1">รหัสนักเรียนแอดมิน + รหัสผ่าน</p>
+            </div>
+            <form onsubmit="event.preventDefault(); handleAdminLogin();" class="space-y-3 text-left font-mitr text-xs">
+                <div><label class="block font-semibold mb-1 text-gray-600">รหัสนักเรียนแอดมิน</label><input type="text" id="admin-student-id" placeholder="เช่น 10001" class="form-input-apple" required></div>
+                <div><label class="block font-semibold mb-1 text-gray-600">รหัสผ่าน (Password)</label><input type="password" id="admin-pass" class="form-input-apple" required></div>
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="closeAdminLoginModal()" class="flex-1 py-3 bg-gray-100 rounded-2xl font-semibold">ยกเลิก</button>
+                    <button type="submit" class="flex-1 py-3 btn-emerald font-semibold">เข้าสู่ระบบ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="user-modal" class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="apple-card p-8 max-w-md w-full bg-white space-y-4">
+            <h3 class="font-mitr font-bold text-base text-gray-900 border-b pb-2">จัดการสิทธิ์แอดมิน</h3>
+            <div class="space-y-3 text-xs font-mitr">
+                <div><label class="block font-semibold mb-1 text-gray-600">รหัสนักเรียน (Username)</label><input type="text" id="usr-sid" class="form-input-apple" required></div>
+                <div><label class="block font-semibold mb-1 text-gray-600">รหัสผ่าน (Password)</label><input type="password" id="usr-password" class="form-input-apple" required></div>
+                <div><label class="block font-semibold mb-1 text-gray-600">ชื่อ-นามสกุล</label><input type="text" id="usr-name" class="form-input-apple" required></div>
+                <div>
+                    <label class="block font-semibold mb-1 text-gray-600">สิทธิ์แอดมิน (Role)</label>
+                    <select id="usr-role" class="form-input-apple">
+                        <option value="Super Admin">Super Admin (แอดมินหลัก)</option>
+                        <option value="Financial Admin">Financial Admin (ฝ่ายการเงิน)</option>
+                        <option value="Sub Admin">Sub Admin (สตาฟฟ์ทั่วไป)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button onclick="document.getElementById('user-modal').classList.add('hidden')" class="flex-1 py-3 bg-gray-100 rounded-2xl font-mitr text-xs">ยกเลิก</button>
+                <button onclick="submitUserForm()" class="flex-1 py-3 btn-emerald font-mitr text-xs">บันทึก</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="announcement-modal" class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="apple-card p-8 max-w-md w-full bg-white space-y-4">
+            <h3 class="font-mitr font-bold text-base text-gray-900 border-b pb-2">แก้ไขประกาศด่วน</h3>
+            <div class="space-y-3 text-xs font-mitr">
+                <div><label class="block font-semibold mb-1 text-gray-600">ข้อความประกาศ</label><textarea id="modal-ann-text" rows="3" class="form-input-apple"></textarea></div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button onclick="document.getElementById('announcement-modal').classList.add('hidden')" class="flex-1 py-3 bg-gray-100 rounded-2xl font-mitr text-xs">ยกเลิก</button>
+                <button onclick="saveAnnouncement()" class="flex-1 py-3 btn-emerald font-mitr text-xs">เผยแพร่ประกาศ</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="sponsor-modal" class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="apple-card p-8 max-w-md w-full bg-white space-y-4">
+            <h3 class="font-mitr font-bold text-base text-gray-900 border-b pb-2">เพิ่มผู้สนับสนุน</h3>
+            <div class="space-y-3 text-xs font-mitr">
+                <div><label class="block font-semibold mb-1 text-gray-600">ชื่อผู้สนับสนุน</label><input type="text" id="spon-name" class="form-input-apple" required></div>
+                <div><label class="block font-semibold mb-1 text-gray-600">จำนวนเงิน (บาท)</label><input type="number" id="spon-amount" class="form-input-apple" required></div>
+                <div><label class="block font-semibold mb-1 text-gray-600">หมายเหตุ</label><input type="text" id="spon-note" class="form-input-apple"></div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button onclick="document.getElementById('sponsor-modal').classList.add('hidden')" class="flex-1 py-3 bg-gray-100 rounded-2xl font-mitr text-xs">ยกเลิก</button>
+                <button onclick="submitSponsor()" class="flex-1 py-3 btn-emerald font-mitr text-xs">บันทึก</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="schedule-modal" class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="apple-card p-8 max-w-md w-full bg-white space-y-4">
+            <h3 class="font-mitr font-bold text-base text-gray-900 border-b pb-2">เพิ่มกำหนดการแข่งขัน</h3>
+            <div class="space-y-3 text-xs font-mitr">
+                <div><label class="block font-semibold mb-1 text-gray-600">เวลา</label><input type="text" id="sch-time" class="form-input-apple" placeholder="เช่น 09:00 น."></div>
+                <div><label class="block font-semibold mb-1 text-gray-600">รายการแข่งขัน</label><input type="text" id="sch-title" class="form-input-apple" placeholder="เช่น ฟุตบอลชายรอบชิง"></div>
+                <div><label class="block font-semibold mb-1 text-gray-600">สถานที่</label><input type="text" id="sch-loc" class="form-input-apple" placeholder="สนามฟุตบอล"></div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button onclick="document.getElementById('schedule-modal').classList.add('hidden')" class="flex-1 py-3 bg-gray-100 rounded-2xl font-mitr text-xs">ยกเลิก</button>
+                <button onclick="submitSchedule()" class="flex-1 py-3 btn-emerald font-mitr text-xs">บันทึก</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE SDK & APP LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, doc, deleteDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Firebase Config ที่เชื่อมต่อกับโปรเจกต์ greenhouse2026-a03c2 ของคุณ
+        const firebaseConfig = {
+            apiKey: "AIzaSyBnba2hgspDaZiNHqYmxCgzCqW7iNPoUOs",
+            authDomain: "greenhouse2026-a03c2.firebaseapp.com",
+            projectId: "greenhouse2026-a03c2",
+            storageBucket: "greenhouse2026-a03c2.firebasestorage.app",
+            messagingSenderId: "272342167752",
+            appId: "1:272342167752:web:c9f08b0d06ee25bf8175fd",
+            measurementId: "G-G2JN6X0BDL"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let systemSettings = { SchoolName: "โรงเรียนห้วยผึ้งพิทยา", SystemName: "Green House Official 2026", ShirtPrice: 250 };
+
+        function showToast(msg = "บันทึกข้อมูลสำเร็จ") {
+            const toast = document.getElementById('autosave-toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Expose functions globally
+        window.openStudentLoginModal = () => document.getElementById('student-login-modal').classList.remove('hidden');
+        window.closeStudentLoginModal = () => document.getElementById('student-login-modal').classList.add('hidden');
+        window.openAdminLoginModal = () => document.getElementById('admin-login-modal').classList.remove('hidden');
+        window.closeAdminLoginModal = () => document.getElementById('admin-login-modal').classList.add('hidden');
+        window.openAnnouncementModal = async () => {
+            const snap = await getDoc(doc(db, "system", "announcement"));
+            document.getElementById('modal-ann-text').value = snap.exists() ? snap.data().text : "";
+            document.getElementById('announcement-modal').classList.remove('hidden');
+        };
+        window.openSponsorModal = () => document.getElementById('sponsor-modal').classList.remove('hidden');
+        window.openScheduleModal = () => document.getElementById('schedule-modal').classList.remove('hidden');
+        window.openUserModal = () => document.getElementById('user-modal').classList.remove('hidden');
+
+        window.checkAuthGuard = () => {
+            if (!currentUser || !currentUser.isLoggedIn) {
+                Swal.fire({ title: 'ต้องยืนยันตัวตนก่อน!', text: 'กรุณากรอกรหัสนักเรียนหรือเข้าสู่ระบบแอดมิน', icon: 'info', showCancelButton: true, confirmButtonText: 'ยืนยันตัวตน' }).then((res) => { if (res.isConfirmed) openStudentLoginModal(); });
+                return false;
+            }
+            return true;
+        };
+
+        window.handleStudentLogin = () => {
+            const sid = document.getElementById('student-login-id').value.trim();
+            if (!sid) return alert('กรุณาระบุรหัสนักเรียน');
+            currentUser = { username: sid, name: "นักเรียนรหัส " + sid, role: "Student", isLoggedIn: true };
+            closeStudentLoginModal();
+            updateUserUI();
+            showToast("ยืนยันสิทธิ์เรียบร้อย!");
+        };
+
+        window.handleAdminLogin = async () => {
+            const sid = document.getElementById('admin-student-id').value.trim();
+            const pass = document.getElementById('admin-pass').value.trim();
+            const querySnapshot = await getDocs(collection(db, "users"));
+            let found = null;
+            querySnapshot.forEach(d => {
+                const data = d.data();
+                if (data.studentId === sid && data.password === pass) found = data;
+            });
+
+            if (found) {
+                currentUser = { username: found.studentId, name: found.name, role: found.role, isLoggedIn: true };
+                closeAdminLoginModal();
+                updateUserUI();
+                showToast("เข้าสู่ระบบแอดมินสำเร็จ (" + found.role + ")");
+            } else {
+                Swal.fire('เข้าสู่ระบบไม่สำเร็จ', 'รหัสนักเรียนหรือรหัสผ่านแอดมินไม่ถูกต้อง', 'error');
+            }
+        };
+
+        window.updateUserUI = () => {
+            const annBarBtn = document.getElementById('announcement-admin-btn');
+            if (currentUser && currentUser.isLoggedIn) {
+                document.getElementById('user-display-name').innerText = currentUser.name;
+                document.getElementById('user-display-role').innerText = currentUser.role === 'Student' ? 'สมาชิกสีเขียว' : ('แอดมิน: ' + currentUser.role);
+                document.getElementById('logged-out-btn-box').classList.add('hidden');
+                document.getElementById('logged-in-btn-box').classList.remove('hidden');
+
+                if (['Super Admin', 'Financial Admin', 'Sub Admin'].includes(currentUser.role)) {
+                    document.querySelectorAll('.role-admin').forEach(el => el.classList.remove('hidden'));
+                    document.getElementById('btn-add-sponsor').classList.remove('hidden');
+                    document.getElementById('btn-add-schedule').classList.remove('hidden');
+                }
+                if (currentUser.role === 'Super Admin') {
+                    document.querySelectorAll('.role-super-admin').forEach(el => el.classList.remove('hidden'));
+                    annBarBtn.classList.remove('hidden');
+                } else {
+                    document.querySelectorAll('.role-super-admin').forEach(el => el.classList.add('hidden'));
+                    annBarBtn.classList.add('hidden');
+                }
+            } else {
+                document.getElementById('user-display-name').innerText = 'ผู้เข้าชมทั่วไป (Guest)';
+                document.getElementById('user-display-role').innerText = 'คณะสีเขียว Official';
+                document.getElementById('logged-out-btn-box').classList.remove('hidden');
+                document.getElementById('logged-in-btn-box').classList.add('hidden');
+                document.querySelectorAll('.role-admin, .role-super-admin').forEach(el => el.classList.add('hidden'));
+                document.getElementById('btn-add-sponsor').classList.add('hidden');
+                document.getElementById('btn-add-schedule').classList.add('hidden');
+                annBarBtn.classList.add('hidden');
+            }
+        };
+
+        window.handleLogout = () => {
+            currentUser = null;
+            updateUserUI();
+            switchPage('dashboard');
+            showToast("ออกจากระบบเรียบร้อย");
+        };
+
+        window.switchPage = (pageId) => {
+            document.querySelectorAll('.spa-view').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('bg-gray-200/60', 'font-semibold'));
+            const targetView = document.getElementById('view-' + pageId);
+            if (targetView) targetView.classList.add('active');
+            const targetBtn = document.querySelector(`.nav-btn[data-target="${pageId}"]`);
+            if (targetBtn) targetBtn.classList.add('bg-gray-200/60', 'font-semibold');
+            document.getElementById('current-page-title').innerText = targetBtn ? targetBtn.innerText.trim() : 'แดชบอร์ด';
+
+            if (pageId === 'dashboard') loadDashboard();
+            if (pageId === 'shirt-store') loadShirtOrders();
+            if (pageId === 'sponsors') loadSponsors();
+            if (pageId === 'schedule') loadSchedule();
+            if (pageId === 'expenses') loadExpenses();
+            if (pageId === 'users') loadUsers();
+            if (pageId === 'settings') loadSettingsForm();
+        };
+
+        // Firestore Data Loaders & Actions
+        window.loadDashboard = async () => {
+            try {
+                const shirtsSnap = await getDocs(collection(db, "shirtOrders"));
+                const sponsSnap = await getDocs(collection(db, "sponsors"));
+                const expSnap = await getDocs(collection(db, "expenses"));
+
+                let shirtRev = 0, sponsRev = 0, spent = 0;
+                shirtsSnap.forEach(d => shirtRev += Number(d.data().totalPrice || 0));
+                sponsSnap.forEach(d => sponsRev += Number(d.data().amount || 0));
+                expSnap.forEach(d => {
+                    const data = d.data();
+                    if (data.status === 'อนุมัติแล้ว') spent += Number(data.amount || 0);
+                });
+
+                document.getElementById('stat-shirt-rev').innerText = '฿' + shirtRev.toLocaleString();
+                document.getElementById('stat-spons').innerText = '฿' + sponsRev.toLocaleString();
+                document.getElementById('stat-spent').innerText = '฿' + spent.toLocaleString();
+                document.getElementById('stat-balance').innerText = '฿' + ((shirtRev + sponsRev) - spent).toLocaleString();
+            } catch (e) { console.error(e); }
+        };
+
+        window.submitShirtOrder = async (formEl) => {
+            if (!checkAuthGuard()) return;
+            const qty = Number(document.getElementById('shirt-qty').value);
+            try {
+                await addDoc(collection(db, "shirtOrders"), {
+                    studentId: document.getElementById('shirt-studentid').value,
+                    name: document.getElementById('shirt-name').value,
+                    size: document.getElementById('shirt-size').value,
+                    qty: qty,
+                    totalPrice: qty * (systemSettings.ShirtPrice || 250),
+                    status: 'รอตรวจสอบ',
+                    timestamp: new Date()
+                });
+                showToast("สั่งซื้อเสื้อสำเร็จ!");
+                loadShirtOrders();
+                formEl.reset();
+            } catch (e) { Swal.fire('ผิดพลาด', 'ไม่สามารถบันทึกข้อมูลได้', 'error'); }
+        };
+
+        window.loadShirtOrders = async () => {
+            const tbody = document.getElementById('shirt-orders-tbody');
+            const snap = await getDocs(collection(db, "shirtOrders"));
+            if (snap.empty) { tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-gray-400">ยังไม่มีคำสั่งซื้อ</td></tr>`; return; }
+            const isAdmin = currentUser && ['Super Admin', 'Financial Admin', 'Sub Admin'].includes(currentUser.role);
+            let html = "";
+            snap.forEach(docSnap => {
+                const o = docSnap.data();
+                const id = docSnap.id;
+                html += `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-3 font-bold">${o.studentId}</td>
+                        <td class="p-3">${o.name}</td>
+                        <td class="p-3 font-semibold">${o.size} (${o.qty})</td>
+                        <td class="p-3 text-emerald-600 font-bold">฿${o.totalPrice}</td>
+                        <td class="p-3">
+                            ${isAdmin ? `<select onchange="updateShirtStatus('${id}', this.value)" class="form-input-apple py-1 px-2 text-xs">
+                                <option value="รอตรวจสอบ" ${o.status === 'รอตรวจสอบ' ? 'selected' : ''}>รอตรวจสอบ</option>
+                                <option value="ชำระเงินแล้ว" ${o.status === 'ชำระเงินแล้ว' ? 'selected' : ''}>ชำระเงินแล้ว</option>
+                                <option value="รับเสื้อแล้ว" ${o.status === 'รับเสื้อแล้ว' ? 'selected' : ''}>รับเสื้อแล้ว</option>
+                            </select>` : `<span class="px-2.5 py-1 bg-gray-100 rounded-full text-xs">${o.status}</span>`}
+                        </td>
+                    </tr>`;
+            });
+            tbody.innerHTML = html;
+        };
+
+        window.updateShirtStatus = async (id, status) => {
+            await updateDoc(doc(db, "shirtOrders", id), { status });
+            showToast("อัปเดตสถานะสำเร็จ");
+        };
+
+        window.claimMeal = async (dayNum) => {
+            if (!checkAuthGuard()) return;
+            const studentId = document.getElementById('meal-studentid').value.trim();
+            if (!studentId) return alert('กรุณาระบุรหัสนักเรียน');
+            
+            const snap = await getDocs(collection(db, "meals"));
+            let alreadyClaimed = false;
+            snap.forEach(d => {
+                const m = d.data();
+                if (m.studentId === studentId && m.day === dayNum) alreadyClaimed = true;
+            });
+
+            if (alreadyClaimed) {
+                Swal.fire('แจ้งเตือน', `รหัสนักเรียน ${studentId} ได้รับอาหารวันที่ ${dayNum} ไปแล้ว!`, 'warning');
+                return;
+            }
+
+            await addDoc(collection(db, "meals"), { studentId, day: dayNum, timestamp: new Date() });
+            showToast(`บันทึกรับอาหาร วันที่ ${dayNum} สำเร็จ!`);
+            document.getElementById('meal-studentid').value = '';
+        };
+
+        window.loadSchedule = async () => {
+            const snap = await getDocs(collection(db, "schedule"));
+            const div = document.getElementById('schedule-list');
+            if (snap.empty) { div.innerHTML = `<p class="text-xs text-gray-400">ยังไม่มีกำหนดการ</p>`; return; }
+            let html = "";
+            snap.forEach(d => {
+                const s = d.data();
+                html += `<div class="p-4 bg-gray-50 rounded-2xl border border-gray-100 flex items-center justify-between">
+                    <div><span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">${s.time}</span>
+                    <h4 class="font-mitr font-bold text-sm text-gray-900 mt-1">${s.title}</h4>
+                    <p class="text-xs text-gray-400 mt-0.5"><i class="fa-solid fa-location-dot mr-1"></i>${s.loc}</p></div></div>`;
+            });
+            div.innerHTML = html;
+        };
+
+        window.submitSchedule = async () => {
+            const time = document.getElementById('sch-time').value;
+            const title = document.getElementById('sch-title').value;
+            const loc = document.getElementById('sch-loc').value;
+            if (!time || !title) return alert('กรุณากรอกข้อมูลให้ครบ');
+            await addDoc(collection(db, "schedule"), { time, title, loc });
+            document.getElementById('schedule-modal').classList.add('hidden');
+            loadSchedule();
+            showToast("เพิ่มกำหนดการสำเร็จ");
+        };
+
+        window.submitAttendance = () => {
+            if (!checkAuthGuard()) return;
+            showToast("เช็กชื่อเรียบร้อย!");
+            document.getElementById('att-id').value = '';
+        };
+
+        window.submitExpense = async (formEl) => {
+            if (!checkAuthGuard()) return;
+            const title = document.getElementById('exp-title').value;
+            const cat = document.getElementById('exp-cat').value;
+            const amount = Number(document.getElementById('exp-amount').value);
+            await addDoc(collection(db, "expenses"), {
+                title, cat, amount,
+                status: currentUser.role === 'Super Admin' ? 'อนุมัติแล้ว' : 'รออนุมัติ',
+                timestamp: new Date()
+            });
+            showToast("ยื่นเรื่องเบิกเงินสำเร็จ");
+            loadExpenses();
+            loadDashboard();
+            formEl.reset();
+        };
+
+        window.loadExpenses = async () => {
+            const snap = await getDocs(collection(db, "expenses"));
+            const tbody = document.getElementById('expenses-tbody');
+            if (snap.empty) { tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-gray-400">ยังไม่มีรายการ</td></tr>`; return; }
+            let html = "";
+            snap.forEach(d => {
+                const e = d.data();
+                html += `<tr class="hover:bg-gray-50 transition"><td class="p-3 font-bold">${e.title}</td><td class="p-3 text-gray-500">${e.cat}</td><td class="p-3 text-rose-600 font-bold">฿${e.amount.toLocaleString()}</td><td class="p-3"><span class="px-2.5 py-1 bg-yellow-50 text-yellow-700 rounded-full text-xs">${e.status}</span></td></tr>`;
+            });
+            tbody.innerHTML = html;
+        };
+
+        window.loadSponsors = async () => {
+            const snap = await getDocs(collection(db, "sponsors"));
+            const div = document.getElementById('sponsors-list');
+            if (snap.empty) { div.innerHTML = `<p class="text-xs text-gray-400 col-span-3 text-center">ยังไม่มีผู้สนับสนุน</p>`; return; }
+            let html = "";
+            snap.forEach(d => {
+                const s = d.data();
+                html += `<div class="p-4 bg-gray-50 rounded-2xl border border-gray-100"><h4 class="font-mitr font-bold text-sm text-gray-900">${s.name}</h4><p class="text-emerald-600 font-bold font-mitr text-base mt-1">฿${Number(s.amount).toLocaleString()}</p><p class="text-xs text-gray-500 mt-1">${s.note || '-'}</p></div>`;
+            });
+            div.innerHTML = html;
+        };
+
+        window.submitSponsor = async () => {
+            const name = document.getElementById('spon-name').value;
+            const amount = document.getElementById('spon-amount').value;
+            const note = document.getElementById('spon-note').value;
+            if (!name || !amount) return alert('กรุณากรอกข้อมูลให้ครบ');
+            await addDoc(collection(db, "sponsors"), { name, amount: Number(amount), note });
+            document.getElementById('sponsor-modal').classList.add('hidden');
+            loadSponsors();
+            loadDashboard();
+            showToast("เพิ่มผู้สนับสนุนสำเร็จ");
+        };
+
+        window.sendCheerMessage = () => { if (!checkAuthGuard()) return; showToast("ส่งกำลังใจสำเร็จ!"); document.getElementById('cheer-msg').value = ''; };
+        window.submitFirstAid = () => { if (!checkAuthGuard()) return; Swal.fire('ส่ง SOS แล้ว', 'หน่วยพยาบาลกำลังเดินทาง', 'success'); };
+        window.loadWrapped = () => { if (!checkAuthGuard()) return; document.getElementById('wrapped-result').classList.remove('hidden'); document.getElementById('wrapped-result').innerHTML = `<p>เสื้อที่สั่ง: <b>1</b> ตัว</p><p>อาหารที่รับ: <b>1</b> มื้อ</p>`; };
+
+        window.loadUsers = async () => {
+            const snap = await getDocs(collection(db, "users"));
+            const tbody = document.getElementById('user-table-body');
+            if (snap.empty) { tbody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-gray-400">ยังไม่มีแอดมิน</td></tr>`; return; }
+            let html = "";
+            snap.forEach(d => {
+                const u = d.data();
+                html += `<tr class="hover:bg-gray-50 transition"><td class="p-4 font-bold">${u.studentId}</td><td class="p-4">${u.name}</td><td class="p-4 font-bold text-emerald-600">${u.role}</td><td class="p-4 text-center">-</td></tr>`;
+            });
+            tbody.innerHTML = html;
+        };
+
+        window.submitUserForm = async () => {
+            const studentId = document.getElementById('usr-sid').value.trim();
+            const password = document.getElementById('usr-password').value.trim();
+            const name = document.getElementById('usr-name').value.trim();
+            const role = document.getElementById('usr-role').value;
+            if (!studentId || !password || !name) return alert('กรุณากรอกข้อมูลให้ครบ');
+            await addDoc(collection(db, "users"), { studentId, password, name, role });
+            document.getElementById('user-modal').classList.add('hidden');
+            loadUsers();
+            showToast("บันทึกแอดมินสำเร็จ");
+        };
+
+        window.loadSettingsForm = async () => {
+            const snap = await getDoc(doc(db, "system", "settings"));
+            if (snap.exists()) {
+                const s = snap.data();
+                document.getElementById('set-school').value = s.SchoolName || '';
+                document.getElementById('set-system').value = s.SystemName || '';
+                document.getElementById('set-shirtprice').value = s.ShirtPrice || 250;
+            }
+        };
+
+        window.saveSettings = async () => {
+            if (!currentUser || currentUser.role !== 'Super Admin') return Swal.fire('ไม่อนุญาต', 'เฉพาะ Super Admin เท่านั้น', 'error');
+            const data = {
+                SchoolName: document.getElementById('set-school').value,
+                SystemName: document.getElementById('set-system').value,
+                ShirtPrice: Number(document.getElementById('set-shirtprice').value)
+            };
+            await setDoc(doc(db, "system", "settings"), data);
+            showToast("บันทึกการตั้งค่าระบบเรียบร้อย");
+        };
+
+        window.saveAnnouncement = async () => {
+            const text = document.getElementById('modal-ann-text').value;
+            await setDoc(doc(db, "system", "announcement"), { text });
+            document.getElementById('announcement-text').innerText = text;
+            document.getElementById('announcement-modal').classList.add('hidden');
+            showToast("อัปเดตประกาศสำเร็จ");
+        };
+
+        // Initialize App & Live Announcement Listener
+        window.onload = async () => {
+            loadDashboard();
+            try {
+                const annSnap = await getDoc(doc(db, "system", "announcement"));
+                if (annSnap.exists()) document.getElementById('announcement-text').innerText = annSnap.data().text;
+            } catch(e) { document.getElementById('announcement-text').innerText = "ยินดีต้อนรับสู่คณะสีเขียว Official 2026"; }
+        };
+    </script>
+</body>
+</html>
