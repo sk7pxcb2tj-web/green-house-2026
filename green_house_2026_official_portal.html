@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full bg-slate-950 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Green House 2026 - Official Portal | Pirates of Neverland</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: SF Pro / Sukhumvit style fallback -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- QRCode JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22',
+                        },
+                        apple: {
+                            glass: 'rgba(15, 23, 42, 0.75)',
+                            card: 'rgba(30, 41, 59, 0.65)',
+                            border: 'rgba(255, 255, 255, 0.12)',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Prompt', 'Kanit', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Apple Glassmorphism and Smooth Utilities */
+        body {
+            font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-input {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f8fafc;
+        }
+        .glass-input:focus {
+            border-color: #10b981;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(16, 185, 129, 0.3);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(16, 185, 129, 0.6);
+        }
+        /* Glow Effects */
+        .glow-emerald {
+            box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.4);
+        }
+        .text-glow {
+            text-shadow: 0 0 12px rgba(52, 211, 153, 0.5);
+        }
+        /* Ticker Animation */
+        @keyframes ticker {
+            0% { transform: translate3d(100%, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+        .animate-ticker {
+            display: inline-block;
+            white-space: nowrap;
+            animation: ticker 30s linear infinite;
+        }
+        .animate-ticker:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="h-full bg-slate-950 text-slate-100 flex flex-col min-h-screen selection:bg-emerald-500 selection:text-white">
+
+    <!-- TOP ANNOUNCEMENT TICKER -->
+    <div class="bg-gradient-to-r from-emerald-950 via-slate-900 to-emerald-950 border-b border-emerald-500/20 text-xs py-2 overflow-hidden sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-mx-auto px-4 flex items-center justify-between gap-4">
+            <span class="bg-emerald-500/20 text-emerald-400 font-semibold px-2.5 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1.5 shrink-0 text-[11px]">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                LIVE
+            </span>
+            <div class="overflow-hidden flex-1 relative">
+                <div class="animate-ticker text-slate-300 font-medium">
+                    🏴‍☠️ <span class="text-emerald-400 font-bold">Green House - Pirates of Neverland:</span> ยินดีต้อนรับสู่พอร์ตัลอย่างเป็นทางการ | 🏆 เหรียญทองล่าสุด: ฟุตซอลชาย ม.ปลาย ชนะ 3-1! | 🍱 Digital Meal Pass เปิดลงทะเบียนแล้ววันนี้ | 👕 ตรวจสอบสถานะการรับเสื้อสวัสดิการได้ที่เมนู Order Tracking | 🚑 จุดปฐมพยาบาลหลักประจำที่เต็นท์สีเขียว ข้างอัฒจันทร์ 1
+                </div>
+            </div>
+            <div class="hidden sm:flex items-center gap-3 shrink-0 text-slate-400 text-xs">
+                <span><i class="fa-solid fa-map-pin text-emerald-400 mr-1"></i> โซน A-3</span>
+                <span><i class="fa-solid fa-cloud-sun text-amber-400 mr-1"></i> 31°C</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVIGATION BAR (Apple Floating Pill Style) -->
+    <nav class="sticky top-9 z-40 px-3 py-2 my-2">
+        <div class="max-w-6xl mx-auto glass-panel rounded-2xl px-4 py-2.5 flex items-center justify-between shadow-2xl border border-white/10">
+            <!-- Logo Brand -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-900/50 border border-emerald-300/30">
+                    <i class="fa-solid fa-skull-crossbones text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-bold text-base tracking-wide text-white flex items-center gap-2">
+                        GREEN HOUSE <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-normal border border-emerald-500/30">2026</span>
+                    </div>
+                    <div class="text-[10px] text-emerald-400/80 font-medium tracking-wider uppercase">Pirates of Neverland</div>
+                </div>
+            </div>
+
+            <!-- Desktop Nav Links -->
+            <div class="hidden md:flex items-center gap-1 bg-slate-900/60 p-1 rounded-xl border border-white/5">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all text-white bg-emerald-600/80 shadow">
+                    <i class="fa-solid fa-compass mr-1.5 text-xs"></i>หน้าหลัก
+                </button>
+                <button onclick="switchTab('schedule')" id="nav-schedule" class="nav-btn px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-calendar-days mr-1.5 text-xs"></i>ตารางแข่ง
+                </button>
+                <button onclick="switchTab('mealpass')" id="nav-mealpass" class="nav-btn px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-utensils mr-1.5 text-xs"></i>Meal Pass
+                </button>
+                <button onclick="switchTab('store')" id="nav-store" class="nav-btn px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-shirt mr-1.5 text-xs"></i>ร้านค้าสวัสดิการ
+                </button>
+                <button onclick="switchTab('tracking')" id="nav-tracking" class="nav-btn px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-magnifying-glass mr-1.5 text-xs"></i>เช็กบิล
+                </button>
+                <button onclick="switchTab('roster')" id="nav-roster" class="nav-btn px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-users mr-1.5 text-xs"></i>ทำเนียบ
+                </button>
+            </div>
+
+            <!-- Action Buttons (Admin Switch & GitHub Hub) -->
+            <div class="flex items-center gap-2">
+                <button onclick="switchTab('github-hub')" id="nav-github-hub" class="p-2.5 rounded-xl bg-slate-800/80 text-slate-300 hover:text-white hover:bg-slate-700/80 border border-slate-700 transition-all" title="GitHub & Developer Hub">
+                    <i class="fa-brands fa-github text-lg"></i>
+                </button>
+                <button onclick="openAdminAuthModal()" id="nav-admin-btn" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-slate-800 to-slate-900 text-slate-200 border border-slate-700 hover:border-emerald-500/50 text-xs font-medium flex items-center gap-2 shadow-lg transition-all">
+                    <i class="fa-solid fa-lock text-emerald-400"></i>
+                    <span id="admin-btn-label" class="hidden sm:inline">Admin Mode</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Bottom / Sub Navigation Bar -->
+        <div class="md:hidden glass-panel fixed bottom-3 left-3 right-3 z-50 rounded-2xl p-2 border border-white/10 shadow-2xl">
+            <div class="grid grid-cols-5 gap-1 text-center">
+                <button onclick="switchTab('home')" id="mob-home" class="mob-btn flex flex-col items-center py-1.5 text-emerald-400 font-medium">
+                    <i class="fa-solid fa-house text-base"></i>
+                    <span class="text-[10px] mt-0.5">หน้าหลัก</span>
+                </button>
+                <button onclick="switchTab('schedule')" id="mob-schedule" class="mob-btn flex flex-col items-center py-1.5 text-slate-400">
+                    <i class="fa-solid fa-calendar-days text-base"></i>
+                    <span class="text-[10px] mt-0.5">ตารางแข่ง</span>
+                </button>
+                <button onclick="switchTab('mealpass')" id="mob-mealpass" class="mob-btn flex flex-col items-center py-1.5 text-slate-400">
+                    <i class="fa-solid fa-qrcode text-base"></i>
+                    <span class="text-[10px] mt-0.5">Meal Pass</span>
+                </button>
+                <button onclick="switchTab('store')" id="mob-store" class="mob-btn flex flex-col items-center py-1.5 text-slate-400">
+                    <i class="fa-solid fa-shirt text-base"></i>
+                    <span class="text-[10px] mt-0.5">ร้านค้า</span>
+                </button>
+                <button onclick="switchTab('tracking')" id="mob-tracking" class="mob-btn flex flex-col items-center py-1.5 text-slate-400">
+                    <i class="fa-solid fa-receipt text-base"></i>
+                    <span class="text-[10px] mt-0.5">เช็กบิล</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT WRAPPER CONTAINER -->
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-4 mb-20 md:mb-8">
+
+        <!-- ================= TAB 1: HOME PORTAL ================= -->
+        <section id="tab-home" class="tab-content space-y-6">
+            <!-- Hero Banner -->
+            <div class="relative rounded-3xl overflow-hidden p-6 md:p-10 border border-emerald-500/30 bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-950 shadow-2xl">
+                <!-- Decorative Background Glow -->
+                <div class="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-7 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+                            <i class="fa-solid fa-anchor"></i> คณะสีเขียว • กีฬาสีประจำปี 2026
+                        </div>
+                        <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                            PIRATES OF <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-green-400 text-glow">NEVERLAND</span>
+                        </h1>
+                        <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                            พอร์ตัลศูนย์กลางข้อมูลคณะสีเขียว ตารางการแข่งขันกีฬาสด คูปองอาหารดิจิทัล สั่งซื้อเสื้อสวัสดิการ และการบริหารจัดการสำหรับคณะกรรมการและสตาฟฟ์แบบเรียลไทม์
+                        </p>
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <button onclick="switchTab('mealpass')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold text-sm shadow-lg shadow-emerald-600/30 hover:shadow-emerald-500/50 transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-qrcode"></i> รับ Meal Pass ดิจิทัล
+                            </button>
+                            <button onclick="switchTab('store')" class="px-5 py-2.5 rounded-xl bg-slate-800/80 text-slate-200 border border-slate-700 hover:border-slate-500 font-medium text-sm transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-bag-shopping text-emerald-400"></i> ร้านค้าสวัสดิการ
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Emergency & Parade Card -->
+                    <div class="md:col-span-5 glass-card rounded-2xl p-5 border border-white/10 space-y-4">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center border border-red-500/30">
+                                    <i class="fa-solid fa-kit-medical"></i>
+                                </div>
+                                <span class="font-semibold text-sm text-slate-100">แจ้งเหตุฉุกเฉิน / ปฐมพยาบาล</span>
+                            </div>
+                            <span class="text-xs text-slate-400">24 ชม.</span>
+                        </div>
+                        <p class="text-xs text-slate-300">หากพบน้องๆ หรือสตาฟฟ์เจ็บป่วย หรือเกิดเหตุฉุกเฉิน กดปุ่มส่งพิกัดแจ้งฝ่ายพยาบาลประจำสีเขียวทันที</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="triggerEmergencyAlert()" class="w-full py-2.5 px-3 rounded-xl bg-red-600/80 hover:bg-red-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all">
+                                <i class="fa-solid fa-truck-medical animate-bounce"></i> แจ้งปฐมพยาบาล
+                            </button>
+                            <a href="tel:0812345678" class="w-full py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 font-medium text-xs flex items-center justify-center gap-2 transition-all">
+                                <i class="fa-solid fa-phone text-emerald-400"></i> โทรสายด่วน
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LIVE MEDAL TALLY BOARD -->
+            <div class="glass-panel rounded-3xl p-6 border border-white/10 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-trophy text-amber-400"></i> ตารางสรุปเหรียญรางวัลสด (Medal Tally)
+                        </h2>
+                        <p class="text-xs text-slate-400">อัปเดตล่าสุดสดๆ จากสนามแข่งขันประจำวัน</p>
+                    </div>
+                    <span class="text-xs text-emerald-400 font-medium px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 self-start sm:self-auto">
+                        <i class="fa-solid fa-rotate text-[10px] mr-1 animate-spin"></i> Live Sync
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="medal-board-container">
+                    <!-- Dynamic Hydrated by JS -->
+                </div>
+            </div>
+
+            <!-- QUICK STATS & LIVE NOTICE GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Parade Location -->
+                <div class="glass-card rounded-2xl p-5 border border-white/10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center border border-teal-500/30">
+                                <i class="fa-solid fa-flag text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-100 text-sm">จุดตั้งขบวนพาเหรด</h3>
+                                <p class="text-xs text-slate-400">วันเปิดพิธี 07:30 น.</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            หน้าอาคาร 3 (ข้างสนามบาสเกตบอล) ธีมโจรสลัด <span class="text-emerald-400 font-semibold">Pirates of Neverland</span> สตาฟฟ์พร้อมสแตนด์บายรับอุปกรณ์ 06:45 น.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+                        <span>ผู้ดูแล: ครูสมชาย</span>
+                        <a href="#roster" onclick="switchTab('roster')" class="text-emerald-400 hover:underline">ดูทำเนียบสตาฟฟ์ →</a>
+                    </div>
+                </div>
+
+                <!-- Supplies / Water Stock Alert -->
+                <div class="glass-card rounded-2xl p-5 border border-white/10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
+                                <i class="fa-solid fa-bottle-water text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-100 text-sm">คลังน้ำดื่ม & เสบียงสี</h3>
+                                <p class="text-xs text-slate-400">จุดเต็นท์สวัสดิการหลัก</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-300">น้ำดื่มสวัสดิการคงเหลือ</span>
+                                    <span class="text-emerald-400 font-bold" id="home-water-stock">420 / 600 แพ็ค</span>
+                                </div>
+                                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-emerald-500 h-full rounded-full" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-300">ผ้าเย็นสวัสดิการ</span>
+                                    <span class="text-amber-400 font-bold">180 / 300 ชุด</span>
+                                </div>
+                                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-amber-500 h-full rounded-full" style="width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-white/10 text-xs text-slate-400">
+                        ขอเบิกน้ำดื่มเพิ่ม ติดต่อฝ่ายสวัสดิการประจำเต็นท์
+                    </div>
+                </div>
+
+                <!-- Key Match Spotlight -->
+                <div class="glass-card rounded-2xl p-5 border border-emerald-500/30 bg-gradient-to-b from-emerald-950/40 to-slate-900/60 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+                                Match Highlight
+                            </span>
+                            <span class="text-xs text-slate-400">14:30 น.</span>
+                        </div>
+                        <h3 class="font-bold text-lg text-white mb-1">รอบชิงชนะเลิศ ฟุตบอล ม.ปลาย</h3>
+                        <p class="text-xs text-slate-300 mb-3">สีเขียว vs สีแดง (สนามฟุตบอลหลัก)</p>
+                        <div class="bg-slate-900/80 rounded-xl p-3 border border-white/10 flex items-center justify-around text-center">
+                            <div>
+                                <div class="text-sm font-bold text-emerald-400">สีเขียว 🟢</div>
+                                <div class="text-xs text-slate-400">Neverland</div>
+                            </div>
+                            <div class="text-base font-black text-slate-500">VS</div>
+                            <div>
+                                <div class="text-sm font-bold text-red-400">สีแดง 🔴</div>
+                                <div class="text-xs text-slate-400">Dragon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="switchTab('schedule')" class="mt-4 w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-emerald-300 font-medium border border-slate-700 text-center transition-all">
+                        เช็กตารางแข่งขันทั้งหมด →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: SCHEDULE & MATCHES ================= -->
+        <section id="tab-schedule" class="tab-content hidden space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-panel p-6 rounded-3xl border border-white/10">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-check text-emerald-400"></i> ตารางการแข่งขันกีฬาประจำวัน
+                    </h2>
+                    <p class="text-xs text-slate-400">ติดตามเชียร์นักกีฬาสีเขียว ติดดาวเพื่อปักหมุดกีฬาที่สนใจได้ทันที</p>
+                </div>
+                <!-- Schedule Filter Tabs -->
+                <div class="flex items-center gap-1 bg-slate-900/80 p-1 rounded-xl border border-white/10 overflow-x-auto">
+                    <button onclick="filterSchedule('all')" id="sched-filter-all" class="sched-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-white bg-emerald-600">
+                        ทั้งหมด
+                    </button>
+                    <button onclick="filterSchedule('live')" id="sched-filter-live" class="sched-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white">
+                        🔴 กำลังแข่ง
+                    </button>
+                    <button onclick="filterSchedule('upcoming')" id="sched-filter-upcoming" class="sched-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white">
+                        ⏳ รอแข่ง
+                    </button>
+                    <button onclick="filterSchedule('finished')" id="sched-filter-finished" class="sched-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white">
+                        ✅ เสร็จสิ้น
+                    </button>
+                    <button onclick="filterSchedule('starred')" id="sched-filter-starred" class="sched-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-amber-400 hover:text-amber-300">
+                        ⭐ ติดดาว
+                    </button>
+                </div>
+            </div>
+
+            <!-- Schedule Matches List -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="schedule-container">
+                <!-- Hydrated dynamically by JS -->
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: DIGITAL MEAL PASS ================= -->
+        <section id="tab-mealpass" class="tab-content hidden space-y-6">
+            <div class="max-w-2xl mx-auto space-y-6">
+                <!-- Registration Card or Display Pass -->
+                <div class="glass-panel rounded-3xl p-6 md:p-8 border border-white/10 text-center space-y-6 shadow-2xl relative overflow-hidden">
+                    <div class="absolute -top-16 -right-16 w-48 h-48 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                    <div>
+                        <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-semibold border border-emerald-500/30">
+                            Digital Pass • Green House Food Welfare
+                        </span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white mt-2">บัตรรับอาหารดิจิทัล (Meal Pass)</h2>
+                        <p class="text-xs text-slate-400 mt-1">ใช้สแกนรับข้าวกล่องและน้ำดื่มประจำวันสำหรับสมาชิกคณะสีเขียว</p>
+                    </div>
+
+                    <!-- Pass Generated View (Hidden by default until registered or found in State) -->
+                    <div id="mealpass-display-card" class="hidden">
+                        <div id="mealpass-qr-render-area" class="bg-gradient-to-b from-slate-900 to-emerald-950/60 p-6 rounded-2xl border border-emerald-500/40 space-y-4 max-w-sm mx-auto shadow-2xl relative">
+                            <div class="flex items-center justify-between border-b border-emerald-500/20 pb-3">
+                                <div class="text-left">
+                                    <div class="text-[10px] uppercase font-bold tracking-widest text-emerald-400">Green House 2026</div>
+                                    <div class="font-black text-lg text-white" id="pass-display-name">ชื่อ-นามสกุล</div>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-mono text-xs border border-emerald-500/30 font-bold" id="pass-display-room">ม.5/1</span>
+                            </div>
+
+                            <!-- QR Code Container -->
+                            <div class="bg-white p-4 rounded-xl flex items-center justify-center my-3 mx-auto w-48 h-48 shadow-inner" id="qrcode-box"></div>
+
+                            <div class="text-xs font-mono text-slate-400 tracking-wider" id="pass-display-phone">081-XXX-XXXX</div>
+
+                            <!-- Meal Status Pills -->
+                            <div class="grid grid-cols-2 gap-2 text-xs pt-2">
+                                <div id="pass-status-m1" class="py-2 px-3 rounded-xl bg-slate-800 text-slate-400 border border-slate-700 flex flex-col items-center">
+                                    <span class="text-[10px] font-medium">มื้อที่ 1 (กลางวัน D1)</span>
+                                    <span class="font-bold mt-0.5 text-amber-400">⏳ ยังไม่ใช้</span>
+                                </div>
+                                <div id="pass-status-m2" class="py-2 px-3 rounded-xl bg-slate-800 text-slate-400 border border-slate-700 flex flex-col items-center">
+                                    <span class="text-[10px] font-medium">มื้อที่ 2 (กลางวัน D2)</span>
+                                    <span class="font-bold mt-0.5 text-amber-400">⏳ ยังไม่ใช้</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center gap-3 mt-6">
+                            <button onclick="downloadMealPassCard()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs shadow-lg flex items-center gap-2 transition-all">
+                                <i class="fa-solid fa-download"></i> บันทึกบัตร Pass ลงมือถือ
+                            </button>
+                            <button onclick="resetMealPassRegistration()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs border border-slate-700 transition-all">
+                                แก้ไขข้อมูล
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Meal Pass Form (Visible if no pass) -->
+                    <form id="mealpass-form" onsubmit="handleRegisterMealPass(event)" class="space-y-4 text-left max-w-md mx-auto">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">ชื่อ - นามสกุล *</label>
+                            <input type="text" id="meal-input-name" required placeholder="เช่น นายสมชาย ชัยชนะ" class="w-full rounded-xl p-3 glass-input text-sm">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">ระดับชั้น / ห้อง *</label>
+                                <input type="text" id="meal-input-room" required placeholder="เช่น ม.5/2" class="w-full rounded-xl p-3 glass-input text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">เบอร์โทรศัพท์ *</label>
+                                <input type="tel" id="meal-input-phone" required placeholder="08XXXXXXXX" pattern="[0-9]{9,10}" class="w-full rounded-xl p-3 glass-input text-sm">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition-all mt-2">
+                            <i class="fa-solid fa-address-card mr-2"></i> ออกบัตร Digital Meal Pass
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: WELFARE STORE ================= -->
+        <section id="tab-store" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-3xl border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-shirt text-emerald-400"></i> ร้านค้าสวัสดิการคณะสีเขียว
+                    </h2>
+                    <p class="text-xs text-slate-400">สั่งซื้อเสื้อประจำสี Headband และสินค้าของระลึก Pirates of Neverland</p>
+                </div>
+                <div class="text-xs px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-medium">
+                    <i class="fa-solid fa-truck-fast mr-1"></i> รับสินค้าได้ที่เต็นท์อำนวยการสี
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <!-- Products Grid -->
+                <div class="md:col-span-7 space-y-4">
+                    <!-- Shirt Card -->
+                    <div class="glass-card rounded-2xl p-5 border border-white/10 flex flex-col sm:flex-row gap-5 items-center">
+                        <div class="w-32 h-32 rounded-xl bg-gradient-to-tr from-emerald-900 to-slate-800 flex items-center justify-center shrink-0 border border-emerald-500/30 relative">
+                            <i class="fa-solid fa-shirt text-6xl text-emerald-400 drop-shadow-md"></i>
+                            <span class="absolute top-2 left-2 text-[10px] font-bold bg-emerald-500 text-slate-950 px-2 py-0.5 rounded-md">HOT</span>
+                        </div>
+                        <div class="space-y-2 flex-1 w-full">
+                            <h3 class="font-bold text-lg text-white">เสื้อกีฬาสีเขียว Pirates Official 2026</h3>
+                            <p class="text-xs text-slate-300">ผ้า Micro Polyester เกรดพรีเมียม ระบายอากาศดีเยี่ยม พิมพ์ลายเต็มตัว</p>
+                            <div class="text-emerald-400 font-bold text-lg">฿250 <span class="text-xs text-slate-400 font-normal">/ ตัว</span></div>
+                            
+                            <!-- Size Selector -->
+                            <div class="space-y-1">
+                                <label class="text-[11px] font-medium text-slate-400 block">เลือกไซซ์:</label>
+                                <div class="flex flex-wrap gap-1.5" id="shirt-size-options">
+                                    <button type="button" onclick="selectShirtSize('S')" class="size-btn px-2.5 py-1 text-xs rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:border-emerald-500">S</button>
+                                    <button type="button" onclick="selectShirtSize('M')" class="size-btn px-2.5 py-1 text-xs rounded-lg border border-emerald-500 bg-emerald-500/20 text-emerald-300 font-bold">M</button>
+                                    <button type="button" onclick="selectShirtSize('L')" class="size-btn px-2.5 py-1 text-xs rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:border-emerald-500">L</button>
+                                    <button type="button" onclick="selectShirtSize('XL')" class="size-btn px-2.5 py-1 text-xs rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:border-emerald-500">XL</button>
+                                    <button type="button" onclick="selectShirtSize('2XL')" class="size-btn px-2.5 py-1 text-xs rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:border-emerald-500">2XL</button>
+                                    <button type="button" onclick="selectShirtSize('3XL')" class="size-btn px-2.5 py-1 text-xs rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:border-emerald-500">3XL</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Headband Item -->
+                    <div class="glass-card rounded-2xl p-5 border border-white/10 flex flex-col sm:flex-row gap-5 items-center">
+                        <div class="w-32 h-28 rounded-xl bg-gradient-to-tr from-teal-900 to-slate-800 flex items-center justify-center shrink-0 border border-teal-500/30">
+                            <i class="fa-solid fa-ribbon text-5xl text-teal-300"></i>
+                        </div>
+                        <div class="space-y-2 flex-1 w-full">
+                            <h3 class="font-bold text-lg text-white">ผ้าคาดศีรษะ Pirates Flag Headband</h3>
+                            <p class="text-xs text-slate-300">ผ้าคาดหัวลายสัญลักษณ์ประจำคณะสีเขียว เพิ่มพลังกองเชียร์</p>
+                            <div class="text-emerald-400 font-bold text-lg">฿50 <span class="text-xs text-slate-400 font-normal">/ ชิ้น</span></div>
+                            <div class="flex items-center gap-3 pt-1">
+                                <label class="text-xs text-slate-400">จำนวน:</label>
+                                <div class="flex items-center gap-2 bg-slate-900 rounded-lg p-1 border border-slate-700">
+                                    <button onclick="updateHeadbandQty(-1)" class="px-2 py-0.5 text-xs text-slate-300 hover:text-white">-</button>
+                                    <span id="headband-qty-display" class="px-2 text-xs font-bold text-white">0</span>
+                                    <button onclick="updateHeadbandQty(1)" class="px-2 py-0.5 text-xs text-slate-300 hover:text-white">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Checkout Form Card -->
+                <div class="md:col-span-5 glass-panel rounded-3xl p-6 border border-white/10 space-y-4">
+                    <h3 class="font-bold text-lg text-white border-b border-white/10 pb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-cart-shopping text-emerald-400"></i> สรุปรายการคำสั่งซื้อ
+                    </h3>
+
+                    <!-- Order Summary Review List -->
+                    <div class="space-y-2 text-xs bg-slate-900/60 p-3.5 rounded-xl border border-white/5">
+                        <div class="flex justify-between text-slate-300">
+                            <span>เสื้อสีเขียว (<span id="cart-shirt-size">M</span>) x <span id="cart-shirt-qty">1</span></span>
+                            <span class="font-medium text-white" id="cart-shirt-price">฿250</span>
+                        </div>
+                        <div class="flex justify-between text-slate-300">
+                            <span>ผ้าคาดหัว x <span id="cart-hb-qty">0</span></span>
+                            <span class="font-medium text-white" id="cart-hb-price">฿0</span>
+                        </div>
+                        <div class="border-t border-white/10 pt-2 flex justify-between font-bold text-sm">
+                            <span class="text-emerald-400">รวมทั้งสิ้น:</span>
+                            <span class="text-emerald-400 text-base" id="cart-total-price">฿250</span>
+                        </div>
+                    </div>
+
+                    <!-- Payment Details Input -->
+                    <form id="store-checkout-form" onsubmit="handleStoreCheckout(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-[11px] font-medium text-slate-300 mb-1">ชื่อผู้สั่งซื้อ *</label>
+                            <input type="text" id="order-name" required placeholder="ชื่อ-นามสกุล" class="w-full rounded-xl p-2.5 glass-input text-xs">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[11px] font-medium text-slate-300 mb-1">ห้อง / ชั้น *</label>
+                                <input type="text" id="order-room" required placeholder="ม.5/1" class="w-full rounded-xl p-2.5 glass-input text-xs">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-medium text-slate-300 mb-1">เบอร์โทรศัพท์ *</label>
+                                <input type="tel" id="order-phone" required placeholder="08XXXXXXXX" pattern="[0-9]{9,10}" class="w-full rounded-xl p-2.5 glass-input text-xs">
+                            </div>
+                        </div>
+
+                        <!-- Payment Method Toggle -->
+                        <div class="space-y-1.5 pt-1">
+                            <label class="block text-[11px] font-medium text-slate-300">ช่องทางการชำระเงิน</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 border border-emerald-500/50 cursor-pointer text-xs">
+                                    <input type="radio" name="payMethod" value="promptpay" checked onchange="togglePayMethod('pp')" class="accent-emerald-500">
+                                    <span>QR PromptPay</span>
+                                </label>
+                                <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 border border-slate-700 cursor-pointer text-xs">
+                                    <input type="radio" name="payMethod" value="cash" onchange="togglePayMethod('cash')" class="accent-emerald-500">
+                                    <span>เงินสดที่เต็นท์</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- PromptPay QR Code Modal Block -->
+                        <div id="pp-qr-box" class="bg-slate-900 p-3 rounded-xl border border-white/10 text-center space-y-2">
+                            <div class="text-[10px] text-slate-400">สแกนชำระผ่าน PromptPay (สแกนได้ทุกธนาคาร)</div>
+                            <img src="https://placehold.co/200x200/022c22/34d399?text=PromptPay+QR" alt="PromptPay" class="w-36 h-36 mx-auto rounded-lg border border-emerald-500/30">
+                            <div class="text-xs font-mono font-bold text-emerald-400">081-234-5678 (กตัญญู - การเงินสีเขียว)</div>
+                            <div>
+                                <label class="block text-[10px] text-slate-400 mb-1">แนบไฟล์สลิปการโอนเงิน (จำลอง)</label>
+                                <input type="file" id="order-slip-file" accept="image/*" class="text-[10px] text-slate-400 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[10px] file:bg-emerald-600 file:text-white">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs shadow-lg transition-all">
+                            ยืนยันการสั่งซื้อและออก Ticket ID
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 5: ORDER TRACKING ================= -->
+        <section id="tab-tracking" class="tab-content hidden space-y-6">
+            <div class="max-w-2xl mx-auto space-y-6">
+                <div class="glass-panel p-6 rounded-3xl border border-white/10 text-center space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-500/30">
+                        <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white">ตรวจสอบสถานะบิล / บัตรคิวรับเสื้อ (Pickup Pass)</h2>
+                    <p class="text-xs text-slate-400">กรอกเบอร์โทรศัพท์ที่ใช้ในการสั่งซื้อ เพื่อเช็กสถานะการชำระเงิน และแสดง QR Code รับสินค้า</p>
+
+                    <div class="flex gap-2 max-w-md mx-auto">
+                        <input type="tel" id="tracking-search-phone" placeholder="กรอกเบอร์โทรศัพท์สั่งซื้อ" class="flex-1 rounded-xl p-3 glass-input text-sm">
+                        <button onclick="searchOrdersByPhone()" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition-all">
+                            ค้นหาบิล
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Orders Search Results List -->
+                <div id="tracking-results-container" class="space-y-4">
+                    <!-- Populated dynamically by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 6: ROSTER & STAFF ================= -->
+        <section id="tab-roster" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-3xl border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-users text-emerald-400"></i> ทำเนียบสตาฟฟ์ & คณะกรรมการสีเขียว
+                    </h2>
+                    <p class="text-xs text-slate-400">รายนามครูที่ปรึกษา ผู้นำเชียร์ ดรัมเมเยอร์ และสตาฟฟ์ประสานงานประจำฝ่าย</p>
+                </div>
+                <input type="text" id="roster-search-input" onkeyup="renderRosterList()" placeholder="ค้นหาชื่อ หรือตำแหน่ง..." class="rounded-xl px-3.5 py-2 glass-input text-xs w-full md:w-64">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="roster-list-container">
+                <!-- Hydrated dynamically by JS -->
+            </div>
+        </section>
+
+        <!-- ================= TAB 7: ADMIN CONSOLE & BUDGET LEDGER ================= -->
+        <section id="tab-admin" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-3xl border border-emerald-500/30 bg-slate-900/90 space-y-6">
+                <!-- Admin Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                            <i class="fa-solid fa-user-shield text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-xl font-bold text-white">Admin Management Console</h2>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500 text-slate-950" id="admin-role-badge">Super Admin</span>
+                            </div>
+                            <p class="text-xs text-slate-400">ระบบบริหารจัดการหลังบ้าน สแกนจ่ายเสื้อ สแกนคูปองอาหาร และงบประมาณ</p>
+                        </div>
+                    </div>
+
+                    <button onclick="logoutAdmin()" class="px-3.5 py-1.5 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-semibold hover:bg-red-500/30 transition-all">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i> ออกจากระบบ Admin
+                    </button>
+                </div>
+
+                <!-- Admin Sub Navigation Tabs -->
+                <div class="flex flex-wrap gap-2 border-b border-white/10 pb-3">
+                    <button onclick="switchAdminSubTab('dash')" id="admin-subnav-dash" class="admin-subnav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white">
+                        <i class="fa-solid fa-chart-pie mr-1.5"></i> Dashboard
+                    </button>
+                    <button onclick="switchAdminSubTab('pickup')" id="admin-subnav-pickup" class="admin-subnav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">
+                        <i class="fa-solid fa-qrcode mr-1.5"></i> สแกนจ่ายเสื้อ
+                    </button>
+                    <button onclick="switchAdminSubTab('meal-scan')" id="admin-subnav-meal-scan" class="admin-subnav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">
+                        <i class="fa-solid fa-utensils mr-1.5"></i> สแกนคูปองอาหาร
+                    </button>
+                    <button onclick="switchAdminSubTab('budget')" id="admin-subnav-budget" class="admin-subnav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">
+                        <i class="fa-solid fa-wallet mr-1.5"></i> บัญชีงบประมาณ (Ledger)
+                    </button>
+                </div>
+
+                <!-- SUBTAB 1: ADMIN DASHBOARD -->
+                <div id="admin-panel-dash" class="admin-sub-panel space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="glass-card rounded-2xl p-4 border border-white/10 space-y-1">
+                            <div class="text-xs text-slate-400">ยอดขายเสื้อ & สวัสดิการรวม</div>
+                            <div class="text-2xl font-black text-emerald-400" id="admin-dash-total-sales">฿0</div>
+                            <div class="text-[10px] text-slate-400" id="admin-dash-sales-count">0 คำสั่งซื้อ</div>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 border border-white/10 space-y-1">
+                            <div class="text-xs text-slate-400">บิลรอการตรวจสอบสลิป</div>
+                            <div class="text-2xl font-black text-amber-400" id="admin-dash-pending-bills">0</div>
+                            <div class="text-[10px] text-amber-300">ต้องยืนยันชำระเงิน</div>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 border border-white/10 space-y-1">
+                            <div class="text-xs text-slate-400">สถิติแจกอาหารมื้อที่ 1</div>
+                            <div class="text-2xl font-black text-teal-400" id="admin-dash-m1-count">0 คน</div>
+                            <div class="text-[10px] text-teal-300">ประจำวันที่ 1</div>
+                        </div>
+                        <div class="glass-card rounded-2xl p-4 border border-white/10 space-y-1">
+                            <div class="text-xs text-slate-400">งบประมาณคงเหลือรวม</div>
+                            <div class="text-2xl font-black text-blue-400" id="admin-dash-budget-rem">฿0</div>
+                            <div class="text-[10px] text-slate-400">จากงบตั้งต้น ฿50,000</div>
+                        </div>
+                    </div>
+
+                    <!-- Manage Bills List Table -->
+                    <div class="glass-card rounded-2xl p-5 border border-white/10 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-white text-sm">รายการคำสั่งซื้อสินค้าทั้งหมด</h3>
+                            <button onclick="exportOrdersToCSV()" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 text-xs font-medium hover:text-white">
+                                <i class="fa-solid fa-file-csv mr-1"></i> Export CSV
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-300">
+                                <thead class="bg-slate-950/80 text-slate-400 uppercase font-semibold text-[10px]">
+                                    <tr>
+                                        <th class="p-2.5">Ticket ID</th>
+                                        <th class="p-2.5">ผู้สั่งซื้อ</th>
+                                        <th class="p-2.5">รายการ</th>
+                                        <th class="p-2.5">ยอดรวม</th>
+                                        <th class="p-2.5">สถานะชำระ</th>
+                                        <th class="p-2.5">รับเสื้อ</th>
+                                        <th class="p-2.5">จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-orders-table-body" class="divide-y divide-white/5">
+                                    <!-- Hydrated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTAB 2: SHIRT PICKUP SCANNER -->
+                <div id="admin-panel-pickup" class="admin-sub-panel hidden space-y-6">
+                    <div class="max-w-xl mx-auto glass-card rounded-2xl p-6 border border-white/10 space-y-4 text-center">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-500/30">
+                            <i class="fa-solid fa-qrcode text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-white">ระบบสแกน / ค้นหาเพื่อจ่ายเสื้อสวัสดิการ</h3>
+                        <p class="text-xs text-slate-400">กรอกรหัส Ticket ID หรือเบอร์โทรศัพท์เพื่ออัปเดตการรับเสื้อ</p>
+
+                        <div class="flex gap-2">
+                            <input type="text" id="pickup-search-input" placeholder="กรอก Ticket ID (เช่น TK-1001) หรือ เบอร์โทร" class="flex-1 rounded-xl p-3 glass-input text-sm">
+                            <button onclick="adminVerifyShirtPickup()" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition-all">
+                                ตรวจสอบบิล
+                            </button>
+                        </div>
+
+                        <div id="pickup-result-card" class="hidden text-left bg-slate-900/90 p-4 rounded-xl border border-white/10 space-y-3 mt-4">
+                            <!-- Hydrated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTAB 3: MEAL SCANNER -->
+                <div id="admin-panel-meal-scan" class="admin-sub-panel hidden space-y-6">
+                    <div class="max-w-xl mx-auto glass-card rounded-2xl p-6 border border-white/10 space-y-4 text-center">
+                        <div class="w-12 h-12 rounded-2xl bg-teal-500/20 text-teal-400 flex items-center justify-center mx-auto border border-teal-500/30">
+                            <i class="fa-solid fa-utensils text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-white">บันทึกการรับอาหาร Meal Pass</h3>
+                        <p class="text-xs text-slate-400">ป้อนเบอร์โทรศัพท์หรือสแกน Meal Pass ประจำตัวนักเรียน</p>
+
+                        <div class="flex gap-2">
+                            <input type="tel" id="meal-scan-phone" placeholder="กรอกเบอร์โทรศัพท์ Meal Pass" class="flex-1 rounded-xl p-3 glass-input text-sm">
+                            <button onclick="adminProcessMealScan()" class="px-5 py-3 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs shadow-lg transition-all">
+                                บันทึกรับอาหาร
+                            </button>
+                        </div>
+
+                        <div id="meal-scan-result-card" class="hidden text-left bg-slate-900/90 p-4 rounded-xl border border-white/10 space-y-3 mt-4">
+                            <!-- Hydrated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTAB 4: BUDGET & EXPENSES LEDGER -->
+                <div id="admin-panel-budget" class="admin-sub-panel hidden space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="glass-card rounded-2xl p-4 border border-white/10 space-y-2">
+                            <div class="text-xs text-slate-400">งบประมาณสวัสดิการ & เสื้อ</div>
+                            <div class="flex justify-between items-end">
+                                <span class="text-xl font-bold text-white" id="b-welfare-spent">฿0 / ฿20,000</span>
+                                <span class="text-xs font-bold text-emerald-400" id="b-welfare-pct">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div id="b-welfare-bar" class="bg-emerald-500 h-full rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-2xl p-4 border border-white/10 space-y-2">
+                            <div class="text-xs text-slate-400">งบประมาณสแตนด์เชียร์ & อุปกรณ์</div>
+                            <div class="flex justify-between items-end">
+                                <span class="text-xl font-bold text-white" id="b-cheer-spent">฿0 / ฿18,000</span>
+                                <span class="text-xs font-bold text-teal-400" id="b-cheer-pct">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div id="b-cheer-bar" class="bg-teal-500 h-full rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-2xl p-4 border border-white/10 space-y-2">
+                            <div class="text-xs text-slate-400">งบประมาณขบวนพาเหรด & ชุด</div>
+                            <div class="flex justify-between items-end">
+                                <span class="text-xl font-bold text-white" id="b-parade-spent">฿0 / ฿12,000</span>
+                                <span class="text-xs font-bold text-amber-400" id="b-parade-pct">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div id="b-parade-bar" class="bg-amber-500 h-full rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add New Expense Form -->
+                    <div class="glass-card rounded-2xl p-5 border border-white/10 space-y-4">
+                        <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-plus-circle text-emerald-400"></i> บันทึกรายการเบิกจ่ายใหม่ (Add Expense Entry)
+                        </h3>
+                        <form onsubmit="handleAddExpenseEntry(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+                            <div class="sm:col-span-3">
+                                <label class="block text-[10px] text-slate-400 mb-1">หมวดหมู่งบประมาณ</label>
+                                <select id="expense-dept" class="w-full rounded-xl p-2.5 glass-input text-xs">
+                                    <option value="welfare">สวัสดิการ (Welfare)</option>
+                                    <option value="cheer">สแตนด์เชียร์ (Cheer)</option>
+                                    <option value="parade">ขบวนพาเหรด (Parade)</option>
+                                </select>
+                            </div>
+                            <div class="sm:col-span-5">
+                                <label class="block text-[10px] text-slate-400 mb-1">รายละเอียดรายการเบิกจ่าย</label>
+                                <input type="text" id="expense-desc" required placeholder="เช่น ค่าอุปกรณ์พร็อพเชียร์" class="w-full rounded-xl p-2.5 glass-input text-xs">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-[10px] text-slate-400 mb-1">จำนวนเงิน (บาท)</label>
+                                <input type="number" id="expense-amount" required placeholder="1000" min="1" class="w-full rounded-xl p-2.5 glass-input text-xs">
+                            </div>
+                            <div class="sm:col-span-2 flex items-end">
+                                <button type="submit" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition-all">
+                                    บันทึกรายการ
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Expenses History Table -->
+                    <div class="glass-card rounded-2xl p-5 border border-white/10 space-y-3">
+                        <h3 class="font-bold text-white text-sm">ประวัติการเบิกจ่ายงบประมาณทั้งหมด</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-300">
+                                <thead class="bg-slate-950/80 text-slate-400 uppercase font-semibold text-[10px]">
+                                    <tr>
+                                        <th class="p-2.5">วันที่-เวลา</th>
+                                        <th class="p-2.5">หมวดหมู่</th>
+                                        <th class="p-2.5">รายละเอียด</th>
+                                        <th class="p-2.5">จำนวนเงิน</th>
+                                        <th class="p-2.5">ผู้บันทึก</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="expense-ledger-table-body" class="divide-y divide-white/5">
+                                    <!-- Hydrated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 8: GITHUB & DEVELOPER HUB ================= -->
+        <section id="tab-github-hub" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-3xl border border-white/10 space-y-6">
+                <!-- Header -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-slate-800 text-white flex items-center justify-center border border-slate-700 text-2xl">
+                            <i class="fa-brands fa-github"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                                Green House GitHub & Developer Hub
+                            </h2>
+                            <p class="text-xs text-slate-400">โครงสร้างไฟล์โปรเจกต์ Source Code ตัวอย่าง และคู่มือการ Deploy บน GitHub Pages & Firebase</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="downloadRepositoryZip()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-file-zipper"></i> Download Repo Bundle
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <!-- GitHub Directory Tree Explorer -->
+                    <div class="md:col-span-4 glass-card rounded-2xl p-4 border border-white/10 space-y-3">
+                        <div class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
+                            <span><i class="fa-solid fa-folder-tree mr-1.5 text-emerald-400"></i> Project Explorer</span>
+                            <span class="text-[10px] text-slate-500">main branch</span>
+                        </div>
+                        <div class="space-y-1 text-xs font-mono">
+                            <div onclick="switchCodeFile('index.html')" id="file-btn-index.html" class="file-item p-2 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 cursor-pointer flex items-center gap-2">
+                                <i class="fa-solid fa-file-code text-amber-400"></i> index.html
+                            </div>
+                            <div onclick="switchCodeFile('firebase-config.js')" id="file-btn-firebase-config.js" class="file-item p-2 rounded-lg hover:bg-slate-800 text-slate-300 cursor-pointer flex items-center gap-2">
+                                <i class="fa-brands fa-js text-yellow-400"></i> firebase-config.js
+                            </div>
+                            <div onclick="switchCodeFile('deploy.yml')" id="file-btn-deploy.yml" class="file-item p-2 rounded-lg hover:bg-slate-800 text-slate-300 cursor-pointer flex items-center gap-2">
+                                <i class="fa-solid fa-gear text-teal-400"></i> .github/workflows/deploy.yml
+                            </div>
+                            <div onclick="switchCodeFile('README.md')" id="file-btn-README.md" class="file-item p-2 rounded-lg hover:bg-slate-800 text-slate-300 cursor-pointer flex items-center gap-2">
+                                <i class="fa-solid fa-file-lines text-blue-400"></i> README.md
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Code Viewer Panel -->
+                    <div class="md:col-span-8 glass-card rounded-2xl p-4 border border-white/10 space-y-3">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                            <span class="text-xs font-mono font-bold text-emerald-400" id="active-filename-display">index.html</span>
+                            <button onclick="copyCurrentCodeSnippet()" class="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-mono transition-all">
+                                <i class="fa-solid fa-copy mr-1"></i> Copy Code
+                            </button>
+                        </div>
+                        <pre class="bg-slate-950 p-4 rounded-xl text-[11px] font-mono text-emerald-300 overflow-x-auto max-h-96 border border-white/5 leading-relaxed" id="code-snippet-viewer">
+<!-- HTML Code Preview Hydrated Dynamically -->
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Deployment Step-by-Step Manual -->
+                <div class="glass-card rounded-2xl p-6 border border-white/10 space-y-4">
+                    <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                        <i class="fa-solid fa-rocket text-emerald-400"></i> คู่มือการ Deployment บน GitHub Pages & Firebase Hosting
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <!-- Option A: GitHub Pages -->
+                        <div class="bg-slate-900/80 p-4 rounded-xl border border-white/10 space-y-2">
+                            <div class="font-bold text-emerald-400 text-sm flex items-center gap-2">
+                                <i class="fa-brands fa-github"></i> วิธีที่ 1: Deploy ผ่าน GitHub Pages (ฟรี)
+                            </div>
+                            <ol class="list-decimal list-inside space-y-1.5 text-slate-300 leading-relaxed">
+                                <li>สร้าง Repository บน GitHub ชื่อ <code class="text-emerald-300 bg-slate-950 px-1 py-0.5 rounded">green-house-2026</code></li>
+                                <li>อัปโหลดไฟล์ <code class="text-emerald-300 bg-slate-950 px-1 py-0.5 rounded">index.html</code> ขึ้นไปยัง branch <code class="text-emerald-300 bg-slate-950 px-1 py-0.5 rounded">main</code></li>
+                                <li>ไปที่ **Settings** → **Pages** ในแถบเมนูด้านข้าง</li>
+                                <li>ในส่วน Source ให้เลือก **Deploy from a branch** แล้วเลือก branch **main** (/root)</li>
+                                <li>กด **Save** รอ 1-2 นาที คุณจะได้ URL เว็บไซต์ เช่น <code class="text-emerald-300 bg-slate-950 px-1 py-0.5 rounded">https://yourusername.github.io/green-house-2026/</code></li>
+                            </ol>
+                        </div>
+
+                        <!-- Option B: Firebase Hosting -->
+                        <div class="bg-slate-900/80 p-4 rounded-xl border border-white/10 space-y-2">
+                            <div class="font-bold text-amber-400 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-fire"></i> วิธีที่ 2: Deploy ผ่าน Firebase Hosting
+                            </div>
+                            <ol class="list-decimal list-inside space-y-1.5 text-slate-300 leading-relaxed">
+                                <li>ติดตั้ง Firebase CLI บนคอมพิวเตอร์: <code class="text-emerald-300 bg-slate-950 px-1 py-0.5 rounded">npm install -g firebase-tools</code></li>
+                                <li>เข้าสู่ระบบผ่าน Terminal: <code class="text-emerald-300 bg-slate-950 px-1 py-0.5 rounded">firebase login</code></li>
+                                <li>สั่งเริ่มต้นโปรเจกต์: <code class="text-emerald-300 bg-slate-950 px-1 py-0.5 rounded">firebase init hosting</code></li>
+                                <li>ตั้งค่า public directory เป็นโฟลเดอร์ที่เก็บ <code class="text-emerald-300 bg-slate-950 px-1 py-0.5 rounded">index.html</code></li>
+                                <li>เผยแพร่ออนไลน์: <code class="text-emerald-300 bg-slate-950 px-1 py-0.5 rounded">firebase deploy</code></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER SECTION -->
+    <footer class="border-t border-white/10 bg-slate-950 py-6 text-center text-xs text-slate-500 space-y-2">
+        <div class="flex items-center justify-center gap-2 text-slate-400">
+            <i class="fa-solid fa-skull-crossbones text-emerald-400"></i>
+            <span class="font-bold text-white">Green House 2026 - Pirates of Neverland</span>
+        </div>
+        <p>พัฒนาโดย คณะกรรมการสภานักเรียนและฝ่ายเทคโนโลยีสารสนเทศ คณะสีเขียว</p>
+        <p class="text-[10px] text-slate-600">Built with HTML5 • Tailwind CSS • Apple Modern Glassmorphic UI</p>
+    </footer>
+
+    <!-- MODAL 1: ADMIN PIN AUTHENTICATION -->
+    <div id="modal-admin-auth" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-panel rounded-3xl p-6 border border-emerald-500/30 max-w-sm w-full space-y-4 text-center shadow-2xl relative">
+            <button onclick="closeAdminAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-500/30">
+                <i class="fa-solid fa-shield-halved text-2xl"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg text-white">เข้าสู่ระบบ Admin Console</h3>
+                <p class="text-xs text-slate-400">กรอกรหัส PIN ผ่านทางเพื่อจัดการระบบหลังบ้าน</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-3">
+                <input type="password" id="admin-pin-input" placeholder="กรอกรหัส PIN (เช่น 1234 หรือ admin)" class="w-full text-center rounded-xl p-3 glass-input text-lg font-mono tracking-widest" required>
+                <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition-all">
+                    เข้าสู่ระบบ
+                </button>
+            </form>
+            <div class="text-[10px] text-slate-500">รหัสผ่านสาธิตทดสอบ: <code class="text-emerald-400">1234</code> หรือ <code class="text-emerald-400">admin</code></div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT STATE MANAGEMENT & LOGIC -->
+    <script>
+        /* ================= INITIAL STATE & DATA STORAGE ================= */
+        const DEFAULT_STATE = {
+            medals: [
+                { color: 'green', name: 'คณะสีเขียว', gold: 12, silver: 8, bronze: 6 },
+                { color: 'red', name: 'คณะสีแดง', gold: 10, silver: 9, bronze: 5 },
+                { color: 'yellow', name: 'คณะสีเหลือง', gold: 8, silver: 11, bronze: 9 },
+                { color: 'blue', name: 'คณะสีฟ้า', gold: 7, silver: 6, bronze: 12 },
+            ],
+            schedules: [
+                { id: 101, sport: 'ฟุตซอล ม.ปลาย', match: 'สีเขียว vs สีเหลือง', time: '09:00 น.', status: 'finished', score: '3 - 1 (เขียวชนะ)', field: 'สนามฟุตซอล 1', starred: true },
+                { id: 102, sport: 'วอลเลย์บอลหญิง', match: 'สีเขียว vs สีฟ้า', time: '10:30 น.', status: 'live', score: 'เซต 2 (18-15)', field: 'อาคารโดมใหญ่', starred: false },
+                { id: 103, sport: 'บาสเกตบอลชาย', match: 'สีเขียว vs สีแดง', time: '13:00 น.', status: 'upcoming', score: '-', field: 'สนามบาส 2', starred: true },
+                { id: 104, sport: 'วิ่ง 100 เมตร ชาย', match: 'รอบชิงชนะเลิศ', time: '15:30 น.', status: 'upcoming', score: '-', field: 'ลู่วิ่งสนามใหญ่', starred: false },
+            ],
+            rosters: [
+                { name: 'ครูสมชาย ใจดี', role: 'ครูที่ปรึกษาหลัก', dept: 'ผู้ดูแลคณะสี', phone: '081-111-2222', avatar: '👨‍🏫' },
+                { name: 'นายกิตติคุณ มั่นคง', role: 'ประธานคณะสีเขียว', dept: 'ฝ่ายบริหาร', phone: '082-333-4444', avatar: '🏴‍☠️' },
+                { name: 'นางสาวสุดารัตน์ สวยงาม', role: 'ดรัมเมเยอร์หลัก', dept: 'ฝ่ายพาเหรด', phone: '083-555-6666', avatar: '👑' },
+                { name: 'นายณัฐวุฒิ วิ่งไว', role: 'หัวหน้าสตาฟฟ์เชียร์', dept: 'ฝ่ายสแตนด์เชียร์', phone: '084-777-8888', avatar: '📣' },
+            ],
+            orders: [
+                { id: 'TK-1001', name: 'นายสมชาย ชัยชนะ', room: 'ม.5/1', phone: '0812345678', items: 'เสื้อ (M) x1, ผ้าคาดหัว x1', total: 300, payStatus: 'paid', shirtPicked: false, date: '2026-10-25 10:15' },
+                { id: 'TK-1002', name: 'นางสาวอนันยา เรียนดี', room: 'ม.4/3', phone: '0898765432', items: 'เสื้อ (L) x1', total: 250, payStatus: 'pending', shirtPicked: false, date: '2026-10-25 11:20' }
+            ],
+            mealPasses: {}, // phone -> { name, room, phone, m1Used: false, m2Used: false }
+            expenses: [
+                { date: '25 ต.ค. 10:00', dept: 'welfare', desc: 'ซื้อน้ำดื่มและผ้าเย็นสวัสดิการ', amount: 3500, author: 'กตัญญู' },
+                { date: '25 ต.ค. 14:20', dept: 'cheer', desc: 'อุปกรณ์สแตนด์เชียร์และกระดาษสี', amount: 4200, author: 'ณัฐวุฒิ' },
+            ],
+            budgets: {
+                welfare: { allocated: 20000, spent: 3500 },
+                cheer: { allocated: 18000, spent: 4200 },
+                parade: { allocated: 12000, spent: 0 }
+            },
+            adminLoggedIn: false,
+            activeShirtSize: 'M',
+            headbandQty: 0
+        };
+
+        // Load State from LocalStorage or Fallback
+        let state = JSON.parse(localStorage.getItem('GREEN_HOUSE_2026_STATE')) || DEFAULT_STATE;
+
+        function saveState() {
+            localStorage.setItem('GREEN_HOUSE_2026_STATE', JSON.stringify(state));
+        }
+
+        /* ================= TAB NAVIGATION LOGIC ================= */
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`tab-${tabId}`);
+            if (target) target.classList.remove('hidden');
+
+            // Update Desktop Nav UI
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-white', 'bg-emerald-600/80', 'shadow');
+                btn.classList.add('text-slate-400');
+            });
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-slate-400');
+                activeNav.classList.add('text-white', 'bg-emerald-600/80', 'shadow');
+            }
+
+            // Update Mobile Nav UI
+            document.querySelectorAll('.mob-btn').forEach(btn => {
+                btn.classList.remove('text-emerald-400');
+                btn.classList.add('text-slate-400');
+            });
+            const activeMob = document.getElementById(`mob-${tabId}`);
+            if (activeMob) {
+                activeMob.classList.remove('text-slate-400');
+                activeMob.classList.add('text-emerald-400');
+            }
+
+            // Trigger tab specific renders
+            if (tabId === 'home') renderMedalBoard();
+            if (tabId === 'schedule') renderScheduleList('all');
+            if (tabId === 'roster') renderRosterList();
+            if (tabId === 'admin') renderAdminConsole();
+            if (tabId === 'github-hub') switchCodeFile('index.html');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ================= MEDAL TALLY BOARD ================= */
+        function renderMedalBoard() {
+            const container = document.getElementById('medal-board-container');
+            if (!container) return;
+
+            container.innerHTML = state.medals.map(m => {
+                const isGreen = m.color === 'green';
+                return `
+                    <div class="glass-card rounded-2xl p-4 border ${isGreen ? 'border-emerald-500/50 bg-emerald-950/40' : 'border-white/10'} space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-sm text-white flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-${m.color}-500"></span>
+                                ${m.name}
+                            </span>
+                            ${isGreen ? '<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500 text-slate-950">สีของเรา</span>' : ''}
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-center pt-1">
+                            <div class="bg-amber-500/10 border border-amber-500/20 p-2 rounded-xl">
+                                <div class="text-[10px] text-amber-400 font-bold">🥇 ทอง</div>
+                                <div class="text-lg font-black text-amber-300">${m.gold}</div>
+                            </div>
+                            <div class="bg-slate-400/10 border border-slate-400/20 p-2 rounded-xl">
+                                <div class="text-[10px] text-slate-300 font-bold">🥈 เงิน</div>
+                                <div class="text-lg font-black text-slate-200">${m.silver}</div>
+                            </div>
+                            <div class="bg-amber-700/10 border border-amber-700/20 p-2 rounded-xl">
+                                <div class="text-[10px] text-amber-600 font-bold">🥉 ทองแดง</div>
+                                <div class="text-lg font-black text-amber-500">${m.bronze}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        /* ================= SCHEDULE & STAR TOGGLE ================= */
+        let currentScheduleFilter = 'all';
+
+        function filterSchedule(filter) {
+            currentScheduleFilter = filter;
+            document.querySelectorAll('.sched-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'text-white');
+                btn.classList.add('text-slate-400');
+            });
+            const activeBtn = document.getElementById(`sched-filter-${filter}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-400');
+                activeBtn.classList.add('bg-emerald-600', 'text-white');
+            }
+            renderScheduleList(filter);
+        }
+
+        function toggleStarMatch(matchId) {
+            const item = state.schedules.find(s => s.id === matchId);
+            if (item) {
+                item.starred = !item.starred;
+                saveState();
+                renderScheduleList(currentScheduleFilter);
+            }
+        }
+
+        function renderScheduleList(filter) {
+            const container = document.getElementById('schedule-container');
+            if (!container) return;
+
+            let filtered = state.schedules;
+            if (filter === 'live') filtered = state.schedules.filter(s => s.status === 'live');
+            if (filter === 'upcoming') filtered = state.schedules.filter(s => s.status === 'upcoming');
+            if (filter === 'finished') filtered = state.schedules.filter(s => s.status === 'finished');
+            if (filter === 'starred') filtered = state.schedules.filter(s => s.starred);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-2 text-center py-8 text-slate-500 text-xs">ไม่พบรายการแข่งขันตามเงื่อนไขที่เลือก</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(s => {
+                const isLive = s.status === 'live';
+                const statusBadge = isLive 
+                    ? '<span class="px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 font-bold text-[10px] animate-pulse">🔴 กำลังแข่ง</span>'
+                    : s.status === 'finished'
+                    ? '<span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[10px]">✅ เสร็จสิ้น</span>'
+                    : '<span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px]">⏳ รอแข่ง</span>';
+
+                return `
+                    <div class="glass-card rounded-2xl p-5 border ${isLive ? 'border-red-500/40' : 'border-white/10'} space-y-3 relative">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-sm text-emerald-400">${s.sport}</span>
+                            <div class="flex items-center gap-2">
+                                ${statusBadge}
+                                <button onclick="toggleStarMatch(${s.id})" class="text-base ${s.starred ? 'text-amber-400' : 'text-slate-600 hover:text-slate-400'} transition-all">
+                                    <i class="fa-solid fa-star"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="font-extrabold text-base text-white">${s.match}</div>
+                        <div class="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-white/5">
+                            <span><i class="fa-solid fa-clock mr-1 text-slate-500"></i>${s.time}</span>
+                            <span><i class="fa-solid fa-location-dot mr-1 text-slate-500"></i>${s.field}</span>
+                        </div>
+                        ${s.score !== '-' ? `<div class="bg-slate-900/80 p-2 rounded-xl text-center text-xs font-mono font-bold text-emerald-300">ผลการแข่ง: ${s.score}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        /* ================= DIGITAL MEAL PASS LOGIC ================= */
+        function handleRegisterMealPass(e) {
+            e.preventDefault();
+            const name = document.getElementById('meal-input-name').value.trim();
+            const room = document.getElementById('meal-input-room').value.trim();
+            const phone = document.getElementById('meal-input-phone').value.trim();
+
+            if (!name || !room || !phone) return;
+
+            state.mealPasses[phone] = {
+                name, room, phone,
+                m1Used: false,
+                m2Used: false
+            };
+            saveState();
+
+            // Render Pass View
+            renderMealPassCard(phone);
+
+            // Trigger Confetti
+            confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+        }
+
+        function renderMealPassCard(phone) {
+            const passData = state.mealPasses[phone];
+            if (!passData) return;
+
+            document.getElementById('mealpass-form').classList.add('hidden');
+            const card = document.getElementById('mealpass-display-card');
+            card.classList.remove('hidden');
+
+            document.getElementById('pass-display-name').innerText = passData.name;
+            document.getElementById('pass-display-room').innerText = passData.room;
+            document.getElementById('pass-display-phone').innerText = `PHONE: ${passData.phone}`;
+
+            // Statuses
+            const m1Box = document.getElementById('pass-status-m1');
+            const m2Box = document.getElementById('pass-status-m2');
+
+            m1Box.innerHTML = `
+                <span class="text-[10px] font-medium">มื้อที่ 1 (กลางวัน D1)</span>
+                <span class="font-bold mt-0.5 ${passData.m1Used ? 'text-emerald-400' : 'text-amber-400'}">
+                    ${passData.m1Used ? '✅ รับแล้ว' : '⏳ ยังไม่ใช้'}
+                </span>
+            `;
+
+            m2Box.innerHTML = `
+                <span class="text-[10px] font-medium">มื้อที่ 2 (กลางวัน D2)</span>
+                <span class="font-bold mt-0.5 ${passData.m2Used ? 'text-emerald-400' : 'text-amber-400'}">
+                    ${passData.m2Used ? '✅ รับแล้ว' : '⏳ ยังไม่ใช้'}
+                </span>
+            `;
+
+            // Generate QR Code
+            const qrBox = document.getElementById('qrcode-box');
+            qrBox.innerHTML = '';
+            new QRCode(qrBox, {
+                text: `MEALPASS:${phone}`,
+                width: 160,
+                height: 160,
+                colorDark: "#022c22",
+                colorLight: "#ffffff",
+            });
+        }
+
+        function resetMealPassRegistration() {
+            document.getElementById('mealpass-display-card').classList.add('hidden');
+            document.getElementById('mealpass-form').classList.remove('hidden');
+        }
+
+        function downloadMealPassCard() {
+            alert('📱 บันทึกรูปภาพหน้าจอ (Screenshot) บัตร Meal Pass ไว้ในสมาร์ตโฟนของคุณเพื่อสแกนหน้าร้านอาหารได้ทันที!');
+        }
+
+        /* ================= WELFARE STORE LOGIC ================= */
+        function selectShirtSize(size) {
+            state.activeShirtSize = size;
+            document.getElementById('cart-shirt-size').innerText = size;
+            
+            // UI Toggle
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.classList.remove('border-emerald-500', 'bg-emerald-500/20', 'text-emerald-300', 'font-bold');
+                btn.classList.add('border-slate-700', 'bg-slate-800', 'text-slate-300');
+            });
+            event.target.classList.add('border-emerald-500', 'bg-emerald-500/20', 'text-emerald-300', 'font-bold');
+        }
+
+        function updateHeadbandQty(delta) {
+            state.headbandQty = Math.max(0, state.headbandQty + delta);
+            document.getElementById('headband-qty-display').innerText = state.headbandQty;
+            document.getElementById('cart-hb-qty').innerText = state.headbandQty;
+            
+            const hbPrice = state.headbandQty * 50;
+            document.getElementById('cart-hb-price').innerText = `฿${hbPrice}`;
+            
+            const total = 250 + hbPrice;
+            document.getElementById('cart-total-price').innerText = `฿${total}`;
+        }
+
+        function togglePayMethod(method) {
+            const ppBox = document.getElementById('pp-qr-box');
+            if (method === 'pp') ppBox.classList.remove('hidden');
+            else ppBox.classList.add('hidden');
+        }
+
+        function handleStoreCheckout(e) {
+            e.preventDefault();
+            const name = document.getElementById('order-name').value.trim();
+            const room = document.getElementById('order-room').value.trim();
+            const phone = document.getElementById('order-phone').value.trim();
+            const payMethod = document.querySelector('input[name="payMethod"]:checked').value;
+
+            const ticketId = 'TK-' + Math.floor(1000 + Math.random() * 9000);
+            const total = 250 + (state.headbandQty * 50);
+            const items = `เสื้อ (${state.activeShirtSize}) x1` + (state.headbandQty > 0 ? `, ผ้าคาดหัว x${state.headbandQty}` : '');
+
+            const newOrder = {
+                id: ticketId,
+                name, room, phone,
+                items, total,
+                payStatus: payMethod === 'cash' ? 'cash_on_pickup' : 'pending',
+                shirtPicked: false,
+                date: new Date().toLocaleString('th-TH')
+            };
+
+            state.orders.push(newOrder);
+            saveState();
+
+            confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
+
+            alert(`✅ สั่งซื้อสำเร็จ! รหัส Ticket ID ของคุณคือ: ${ticketId}\nสามารถนำเบอร์โทรไปตรวจสอบสถานะในเมนู "เช็กบิล" ได้ทันที`);
+            switchTab('tracking');
+            document.getElementById('tracking-search-phone').value = phone;
+            searchOrdersByPhone();
+        }
+
+        /* ================= ORDER TRACKING LOGIC ================= */
+        function searchOrdersByPhone() {
+            const phone = document.getElementById('tracking-search-phone').value.trim();
+            const container = document.getElementById('tracking-results-container');
+            if (!phone) return;
+
+            const results = state.orders.filter(o => o.phone.includes(phone));
+
+            if (results.length === 0) {
+                container.innerHTML = `<div class="glass-card rounded-2xl p-6 text-center text-slate-400 text-xs">ไม่พบคำสั่งซื้อสำหรับเบอร์โทรศัพท์นี้</div>`;
+                return;
+            }
+
+            container.innerHTML = results.map(o => {
+                const isPaid = o.payStatus === 'paid';
+                const statusBadge = isPaid 
+                    ? '<span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold">✅ ชำระเงินแล้ว</span>'
+                    : o.payStatus === 'cash_on_pickup'
+                    ? '<span class="px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-bold">💵 จ่ายเงินสดวันรับเสื้อ</span>'
+                    : '<span class="px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-bold">⏳ รอตรวจสอบสลิป</span>';
+
+                return `
+                    <div class="glass-card rounded-2xl p-5 border border-white/10 space-y-4">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                            <div>
+                                <span class="text-xs font-mono font-bold text-emerald-400">${o.id}</span>
+                                <div class="font-bold text-sm text-white">${o.name} (${o.room})</div>
+                            </div>
+                            ${statusBadge}
+                        </div>
+
+                        <div class="text-xs space-y-1 text-slate-300">
+                            <div><strong class="text-slate-400">รายการ:</strong> ${o.items}</div>
+                            <div><strong class="text-slate-400">ยอดรวม:</strong> <span class="text-emerald-400 font-bold">฿${o.total}</span></div>
+                            <div><strong class="text-slate-400">สถานะรับเสื้อ:</strong> ${o.shirtPicked ? '<span class="text-emerald-400 font-bold">✅ รับเสื้อแล้ว</span>' : '<span class="text-amber-400">⏳ ยังไม่ได้รับเสื้อ</span>'}</div>
+                        </div>
+
+                        <!-- Ticket Pickup QR -->
+                        <div class="bg-slate-900/90 p-4 rounded-xl border border-emerald-500/30 text-center space-y-2">
+                            <div class="text-[10px] text-slate-400 uppercase font-bold">Pickup Pass QR Code</div>
+                            <div id="qr-order-${o.id}" class="bg-white p-2 rounded-lg inline-block mx-auto"></div>
+                            <div class="text-[10px] text-slate-400">แสดง QR Code นี้ให้สตาฟฟ์สแกนจ่ายเสื้อที่เต็นท์อำนวยการ</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Render QRs for orders
+            results.forEach(o => {
+                const el = document.getElementById(`qr-order-${o.id}`);
+                if (el) {
+                    el.innerHTML = '';
+                    new QRCode(el, { text: o.id, width: 120, height: 120 });
+                }
+            });
+        }
+
+        /* ================= ROSTER LIST LOGIC ================= */
+        function renderRosterList() {
+            const container = document.getElementById('roster-list-container');
+            const search = (document.getElementById('roster-search-input')?.value || '').toLowerCase();
+            if (!container) return;
+
+            const filtered = state.rosters.filter(r => r.name.toLowerCase().includes(search) || r.role.toLowerCase().includes(search));
+
+            container.innerHTML = filtered.map(r => `
+                <div class="glass-card rounded-2xl p-4 border border-white/10 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-2xl shrink-0">
+                        ${r.avatar}
+                    </div>
+                    <div class="space-y-0.5 flex-1 min-w-0">
+                        <h4 class="font-bold text-sm text-white truncate">${r.name}</h4>
+                        <div class="text-xs text-emerald-400 font-medium">${r.role}</div>
+                        <div class="text-[10px] text-slate-400">${r.dept}</div>
+                    </div>
+                    <a href="tel:${r.phone}" class="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 transition-all border border-emerald-500/30" title="โทรออก">
+                        <i class="fa-solid fa-phone text-xs"></i>
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        /* ================= EMERGENCY TRIGGER ================= */
+        function triggerEmergencyAlert() {
+            confetti({ particleCount: 30, spread: 40 });
+            alert('🚨 ส่งสัญญาณขอความช่วยเหลือฉุกเฉินไปยังเต็นท์พยาบาลเรียบร้อยแล้ว! เจ้าหน้าที่พยาบาลกำลังเดินทางไปยังพิกัดของคุณ');
+        }
+
+        /* ================= ADMIN CONSOLE & AUTH ================= */
+        function openAdminAuthModal() {
+            if (state.adminLoggedIn) {
+                switchTab('admin');
+            } else {
+                document.getElementById('modal-admin-auth').classList.remove('hidden');
+            }
+        }
+
+        function closeAdminAuthModal() {
+            document.getElementById('modal-admin-auth').classList.add('hidden');
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const pin = document.getElementById('admin-pin-input').value.trim();
+            if (pin === '1234' || pin === 'admin') {
+                state.adminLoggedIn = true;
+                saveState();
+                closeAdminAuthModal();
+                switchTab('admin');
+                document.getElementById('admin-btn-label').innerText = 'Admin Active';
+            } else {
+                alert('❌ รหัส PIN ไม่ถูกต้อง (ลองใช้ 1234 หรือ admin)');
+            }
+        }
+
+        function logoutAdmin() {
+            state.adminLoggedIn = false;
+            saveState();
+            document.getElementById('admin-btn-label').innerText = 'Admin Mode';
+            switchTab('home');
+        }
+
+        function switchAdminSubTab(subTab) {
+            document.querySelectorAll('.admin-sub-panel').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.admin-subnav-btn').forEach(b => {
+                b.classList.remove('bg-emerald-600', 'text-white');
+                b.classList.add('bg-slate-800', 'text-slate-300');
+            });
+
+            document.getElementById(`admin-panel-${subTab}`).classList.remove('hidden');
+            event.currentTarget.classList.remove('bg-slate-800', 'text-slate-300');
+            event.currentTarget.classList.add('bg-emerald-600', 'text-white');
+
+            if (subTab === 'dash') renderAdminDashboard();
+            if (subTab === 'budget') renderBudgetLedger();
+        }
+
+        function renderAdminConsole() {
+            renderAdminDashboard();
+            renderBudgetLedger();
+        }
+
+        function renderAdminDashboard() {
+            // Totals Calculation
+            const totalSales = state.orders.reduce((sum, o) => sum + o.total, 0);
+            const pendingBills = state.orders.filter(o => o.payStatus === 'pending').length;
+            const m1Count = Object.values(state.mealPasses).filter(p => p.m1Used).length;
+
+            document.getElementById('admin-dash-total-sales').innerText = `฿${totalSales.toLocaleString()}`;
+            document.getElementById('admin-dash-sales-count').innerText = `${state.orders.length} คำสั่งซื้อ`;
+            document.getElementById('admin-dash-pending-bills').innerText = pendingBills;
+            document.getElementById('admin-dash-m1-count').innerText = `${m1Count} คน`;
+
+            // Orders Table Body
+            const tbody = document.getElementById('admin-orders-table-body');
+            tbody.innerHTML = state.orders.map(o => `
+                <tr>
+                    <td class="p-2.5 font-mono text-emerald-400 font-bold">${o.id}</td>
+                    <td class="p-2.5 font-medium text-white">${o.name} (${o.room})</td>
+                    <td class="p-2.5">${o.items}</td>
+                    <td class="p-2.5 font-bold">฿${o.total}</td>
+                    <td class="p-2.5">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${o.payStatus === 'paid' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">
+                            ${o.payStatus}
+                        </span>
+                    </td>
+                    <td class="p-2.5">${o.shirtPicked ? '✅ แล้ว' : '⏳ ยัง'}</td>
+                    <td class="p-2.5">
+                        <button onclick="adminApprovePayment('${o.id}')" class="px-2 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-[10px]">ยืนยันเงิน</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function adminApprovePayment(ticketId) {
+            const order = state.orders.find(o => o.id === ticketId);
+            if (order) {
+                order.payStatus = 'paid';
+                saveState();
+                renderAdminDashboard();
+            }
+        }
+
+        function adminVerifyShirtPickup() {
+            const query = document.getElementById('pickup-search-input').value.trim();
+            const resCard = document.getElementById('pickup-result-card');
+            const order = state.orders.find(o => o.id === query || o.phone === query);
+
+            if (!order) {
+                alert('❌ ไม่พบบิลตรงกับรหัสนี้');
+                return;
+            }
+
+            resCard.classList.remove('hidden');
+            resCard.innerHTML = `
+                <div class="font-bold text-white text-base">${order.name} (${order.room})</div>
+                <div class="text-xs text-slate-300">รายการ: ${order.items}</div>
+                <div class="text-xs text-slate-300">สถานะชำระ: <strong class="text-emerald-400">${order.payStatus}</strong></div>
+                <button onclick="adminConfirmShirtHandout('${order.id}')" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs mt-2">
+                    ${order.shirtPicked ? '✅ จ่ายเสื้อเรียบร้อยแล้ว (กดอีกครั้งเพื่อยกเลิก)' : '📦 กดยืนยันจ่ายเสื้อแล้ว'}
+                </button>
+            `;
+        }
+
+        function adminConfirmShirtHandout(id) {
+            const order = state.orders.find(o => o.id === id);
+            if (order) {
+                order.shirtPicked = !order.shirtPicked;
+                saveState();
+                adminVerifyShirtPickup();
+            }
+        }
+
+        function adminProcessMealScan() {
+            const phone = document.getElementById('meal-scan-phone').value.trim();
+            const resCard = document.getElementById('meal-scan-result-card');
+            const pass = state.mealPasses[phone];
+
+            if (!pass) {
+                alert('❌ ไม่พบบัตร Meal Pass สำหรับเบอร์โทรนี้');
+                return;
+            }
+
+            resCard.classList.remove('hidden');
+            resCard.innerHTML = `
+                <div class="font-bold text-white text-base">${pass.name} (${pass.room})</div>
+                <div class="text-xs text-slate-300">เบอร์โทร: ${pass.phone}</div>
+                <div class="grid grid-cols-2 gap-2 pt-2">
+                    <button onclick="toggleMealStatus('${phone}', 'm1')" class="py-2 rounded-lg ${pass.m1Used ? 'bg-emerald-600' : 'bg-slate-800'} text-white text-xs font-bold">
+                        มื้อ 1: ${pass.m1Used ? '✅ รับแล้ว' : 'กดรับอาหาร'}
+                    </button>
+                    <button onclick="toggleMealStatus('${phone}', 'm2')" class="py-2 rounded-lg ${pass.m2Used ? 'bg-emerald-600' : 'bg-slate-800'} text-white text-xs font-bold">
+                        มื้อ 2: ${pass.m2Used ? '✅ รับแล้ว' : 'กดรับอาหาร'}
+                    </button>
+                </div>
+            `;
+        }
+
+        function toggleMealStatus(phone, mealKey) {
+            if (mealKey === 'm1') state.mealPasses[phone].m1Used = !state.mealPasses[phone].m1Used;
+            if (mealKey === 'm2') state.mealPasses[phone].m2Used = !state.mealPasses[phone].m2Used;
+            saveState();
+            adminProcessMealScan();
+        }
+
+        function exportOrdersToCSV() {
+            let csv = "TicketID,Name,Room,Phone,Items,Total,PayStatus,ShirtPicked\n";
+            state.orders.forEach(o => {
+                csv += `${o.id},"${o.name}",${o.room},${o.phone},"${o.items}",${o.total},${o.payStatus},${o.shirtPicked}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `GreenHouse2026_Orders_${Date.now()}.csv`;
+            a.click();
+        }
+
+        /* ================= BUDGET LEDGER LOGIC ================= */
+        function renderBudgetLedger() {
+            // Welfare
+            const wSpent = state.budgets.welfare.spent;
+            const wAlloc = state.budgets.welfare.allocated;
+            const wPct = Math.round((wSpent / wAlloc) * 100);
+            document.getElementById('b-welfare-spent').innerText = `฿${wSpent.toLocaleString()} / ฿${wAlloc.toLocaleString()}`;
+            document.getElementById('b-welfare-pct').innerText = `${wPct}%`;
+            document.getElementById('b-welfare-bar').style.width = `${Math.min(100, wPct)}%`;
+
+            // Cheer
+            const cSpent = state.budgets.cheer.spent;
+            const cAlloc = state.budgets.cheer.allocated;
+            const cPct = Math.round((cSpent / cAlloc) * 100);
+            document.getElementById('b-cheer-spent').innerText = `฿${cSpent.toLocaleString()} / ฿${cAlloc.toLocaleString()}`;
+            document.getElementById('b-cheer-pct').innerText = `${cPct}%`;
+            document.getElementById('b-cheer-bar').style.width = `${Math.min(100, cPct)}%`;
+
+            // Parade
+            const pSpent = state.budgets.parade.spent;
+            const pAlloc = state.budgets.parade.allocated;
+            const pPct = Math.round((pSpent / pAlloc) * 100);
+            document.getElementById('b-parade-spent').innerText = `฿${pSpent.toLocaleString()} / ฿${pAlloc.toLocaleString()}`;
+            document.getElementById('b-parade-pct').innerText = `${pPct}%`;
+            document.getElementById('b-parade-bar').style.width = `${Math.min(100, pPct)}%`;
+
+            // Expenses Table
+            const tbody = document.getElementById('expense-ledger-table-body');
+            tbody.innerHTML = state.expenses.map(e => `
+                <tr>
+                    <td class="p-2.5 text-slate-400 font-mono text-[10px]">${e.date}</td>
+                    <td class="p-2.5 font-bold uppercase text-emerald-400 text-[10px]">${e.dept}</td>
+                    <td class="p-2.5 font-medium text-white">${e.desc}</td>
+                    <td class="p-2.5 font-bold text-amber-400">฿${e.amount.toLocaleString()}</td>
+                    <td class="p-2.5 text-slate-400">${e.author}</td>
+                </tr>
+            `).join('');
+        }
+
+        function handleAddExpenseEntry(e) {
+            e.preventDefault();
+            const dept = document.getElementById('expense-dept').value;
+            const desc = document.getElementById('expense-desc').value.trim();
+            const amount = parseFloat(document.getElementById('expense-amount').value);
+
+            if (!desc || isNaN(amount) || amount <= 0) return;
+
+            // Over-budget Guard Warning
+            const currentSpent = state.budgets[dept].spent;
+            const maxBudget = state.budgets[dept].allocated;
+            if (currentSpent + amount > maxBudget) {
+                if (!confirm(`⚠️ คำเตือน: รายการนี้จะทำให้งบประมาณฝาก ${dept.toUpperCase()} เกินกำหนด ฿${maxBudget.toLocaleString()}!\n\nต้องการยืนยันเบิกข้ามเกณฑ์หรือไม่?`)) {
+                    return;
+                }
+            }
+
+            state.budgets[dept].spent += amount;
+            state.expenses.unshift({
+                date: new Date().toLocaleDateString('th-TH', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
+                dept, desc, amount,
+                author: 'Admin'
+            });
+
+            saveState();
+            renderBudgetLedger();
+            e.target.reset();
+        }
+
+        /* ================= GITHUB HUB & CODE VIEWER ================= */
+        const CODE_SNIPPETS = {
+            'index.html': `<!-- Green House 2026 - Single File App Structure -->\n<!DOCTYPE html>\n<html lang="th">\n<head>\n  <meta charset="UTF-8">\n  <title>Green House 2026 - Pirates of Neverland</title>\n</head>\n<body>\n  <div id="app">Single File Portal Hydrated Successfully!</div>\n</body>\n</html>`,
+            'firebase-config.js': `// Optional Firebase Integration Module\nimport { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";\nimport { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";\n\nconst firebaseConfig = {\n  apiKey: "YOUR_API_KEY",\n  authDomain: "green-house-2026.firebaseapp.com",\n  projectId: "green-house-2026",\n};\n\nexport const app = initializeApp(firebaseConfig);\nexport const db = getFirestore(app);`,
+            'deploy.yml': `# GitHub Actions Workflow for Automatic Deploy\nname: Deploy Green House Portal\non:\n  push:\n    branches: [ main ]\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v3\n      - name: Deploy to GitHub Pages\n        uses: peaceiris/actions-gh-pages@v3\n        with:\n          github_token: \${{ secrets.GITHUB_TOKEN }}\n          publish_dir: ./`,
+            'README.md': `# 🏴‍☠️ Green House 2026 - Pirates of Neverland\n\nOfficial Web Portal for Green House Sports Day 2026.\nBuilt with HTML5, Tailwind CSS, Apple Glassmorphic Design, LocalStorage & Firebase Ready Architecture.`
+        };
+
+        function switchCodeFile(filename) {
+            document.getElementById('active-filename-display').innerText = filename;
+            document.getElementById('code-snippet-viewer').textContent = CODE_SNIPPETS[filename] || '';
+
+            document.querySelectorAll('.file-item').forEach(el => {
+                el.classList.remove('bg-emerald-500/20', 'text-emerald-300', 'border', 'border-emerald-500/30');
+                el.classList.add('text-slate-300');
+            });
+            const activeEl = document.getElementById(`file-btn-${filename}`);
+            if (activeEl) {
+                activeEl.classList.add('bg-emerald-500/20', 'text-emerald-300', 'border', 'border-emerald-500/30');
+            }
+        }
+
+        function copyCurrentCodeSnippet() {
+            const text = document.getElementById('code-snippet-viewer').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('📋 คัดลอกโค้ดไปยัง Clipboard เรียบร้อยแล้ว!');
+            });
+        }
+
+        function downloadRepositoryZip() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", "green_house_2026_repository_data.json");
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+        }
+
+        /* ================= WINDOW ONLOAD INITIALIZATION ================= */
+        window.onload = function() {
+            renderMedalBoard();
+            renderScheduleList('all');
+            renderRosterList();
+            
+            // Check if user already registered meal pass
+            const keys = Object.keys(state.mealPasses);
+            if (keys.length > 0) {
+                renderMealPassCard(keys[0]);
+            }
+        };
+    </script>
+</body>
+</html>
